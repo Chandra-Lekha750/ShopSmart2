@@ -1,97 +1,295 @@
-# Nodemailer
+# MongoDB NodeJS Driver
 
-[![Nodemailer](https://raw.githubusercontent.com/nodemailer/nodemailer/master/assets/nm_logo_200x136.png)](https://nodemailer.com/about/)
+The official [MongoDB](https://www.mongodb.com/) driver for Node.js.
 
-Send emails from Node.js – easy as cake! 🍰✉️
+**Upgrading to version 5? Take a look at our [upgrade guide here](https://github.com/mongodb/node-mongodb-native/blob/HEAD/etc/notes/CHANGES_5.0.0.md)!**
 
-[![NPM](https://nodei.co/npm/nodemailer.png?downloads=true&downloadRank=true&stars=true)](https://nodemailer.com/about/)
+## Quick Links
 
-See [nodemailer.com](https://nodemailer.com/) for documentation and terms.
+| what          | where                                                                                                             |
+| ------------- | ----------------------------------------------------------------------------------------------------------------- |
+| documentation | [www.mongodb.com/docs/drivers/node](https://www.mongodb.com/docs/drivers/node)                                    |
+| api-doc       | [mongodb.github.io/node-mongodb-native](https://mongodb.github.io/node-mongodb-native)                            |
+| npm package   | [www.npmjs.com/package/mongodb](https://www.npmjs.com/package/mongodb)                                            |
+| source        | [github.com/mongodb/node-mongodb-native](https://github.com/mongodb/node-mongodb-native)                          |
+| mongodb       | [www.mongodb.com](https://www.mongodb.com)                                                                        |
+| changelog     | [HISTORY.md](https://github.com/mongodb/node-mongodb-native/blob/HEAD/HISTORY.md)                                 |
+| upgrade to v5 | [etc/notes/CHANGES_5.0.0.md](https://github.com/mongodb/node-mongodb-native/blob/HEAD/etc/notes/CHANGES_5.0.0.md) |
+| contributing  | [CONTRIBUTING.md](https://github.com/mongodb/node-mongodb-native/blob/HEAD/CONTRIBUTING.md)                       |
 
----
+### Bugs / Feature Requests
 
-> Check out **[EmailEngine](https://emailengine.app/?utm_source=github-nodemailer&utm_campaign=nodemailer&utm_medium=readme-link)** – a self-hosted email gateway that allows making **REST requests against IMAP and SMTP servers**. EmailEngine also sends webhooks whenever something changes on the registered accounts.\
-> \
-> Using the email accounts registered with EmailEngine, you can receive and [send emails](https://emailengine.app/sending-emails?utm_source=github-nodemailer&utm_campaign=nodemailer&utm_medium=readme-link). EmailEngine supports OAuth2, delayed sends, opens and clicks tracking, bounce detection, etc. All on top of regular email accounts without an external MTA service.
+Think you’ve found a bug? Want to see a new feature in `node-mongodb-native`? Please open a
+case in our issue management tool, JIRA:
 
----
+- Create an account and login [jira.mongodb.org](https://jira.mongodb.org).
+- Navigate to the NODE project [jira.mongodb.org/browse/NODE](https://jira.mongodb.org/browse/NODE).
+- Click **Create Issue** - Please provide as much information as possible about the issue type and how to reproduce it.
 
-This project is supported by [Forward Email](https://forwardemail.net) – the 100% open-source and privacy-focused email service.
+Bug reports in JIRA for all driver projects (i.e. NODE, PYTHON, CSHARP, JAVA) and the
+Core Server (i.e. SERVER) project are **public**.
 
----
+### Support / Feedback
 
-This project is supported by [Opensense](https://www.opensense.com) - The beautiful email signature management company for Office 365 and Google Workspace.
+For issues with, questions about, or feedback for the Node.js driver, please look into our [support channels](https://docs.mongodb.com/manual/support). Please do not email any of the driver developers directly with issues or questions - you're more likely to get an answer on the [MongoDB Community Forums](https://community.mongodb.com/tags/c/drivers-odms-connectors/7/node-js-driver).
 
----
+### Change Log
 
-## Having an issue?
+Change history can be found in [`HISTORY.md`](https://github.com/mongodb/node-mongodb-native/blob/HEAD/HISTORY.md).
 
-#### First review the docs
+### Compatibility
 
-Documentation for Nodemailer can be found at [nodemailer.com](https://nodemailer.com/about/).
+For version compatibility matrices, please refer to the following links:
 
-#### Nodemailer throws a SyntaxError for "..."
+- [MongoDB](https://docs.mongodb.com/drivers/node/current/compatibility/#mongodb-compatibility)
+- [NodeJS](https://docs.mongodb.com/drivers/node/current/compatibility/#language-compatibility)
 
-You are using an older Node.js version than v6.0. Upgrade Node.js to get support for the spread operator. Nodemailer supports all Node.js versions starting from Node.js@v6.0.0.
+#### Typescript Version
 
-#### I'm having issues with Gmail
+We recommend using the latest version of typescript, however we currently ensure the driver's public types compile against `typescript@4.1.6`.
+This is the lowest typescript version guaranteed to work with our driver: older versions may or may not work - use at your own risk.
+Since typescript [does not restrict breaking changes to major versions](https://github.com/Microsoft/TypeScript/wiki/Breaking-Changes) we consider this support best effort.
+If you run into any unexpected compiler failures against our supported TypeScript versions please let us know by filing an issue on our [JIRA](https://jira.mongodb.org/browse/NODE).
 
-Gmail either works well, or it does not work at all. It is probably easier to switch to an alternative service instead of fixing issues with Gmail. If Gmail does not work for you, then don't use it. Read more about it [here](https://nodemailer.com/usage/using-gmail/).
+## Installation
 
-#### I get ETIMEDOUT errors
+The recommended way to get started using the Node.js 5.x driver is by using the `npm` (Node Package Manager) to install the dependency in your project.
 
-Check your firewall settings. Timeout usually occurs when you try to open a connection to a firewalled port either on the server or on your machine. Some ISPs also block email ports to prevent spamming.
+After you've created your own project using `npm init`, you can run:
 
-#### Nodemailer works on one machine but not in another
-
-It's either a firewall issue, or your SMTP server blocks authentication attempts from some servers.
-
-#### I get TLS errors
-
--   If you are running the code on your machine, check your antivirus settings. Antiviruses often mess around with email ports usage. Node.js might not recognize the MITM cert your antivirus is using.
--   Latest Node versions allow only TLS versions 1.2 and higher. Some servers might still use TLS 1.1 or lower. Check Node.js docs on how to get correct TLS support for your app. You can change this with [tls.minVersion](https://nodejs.org/dist/latest-v16.x/docs/api/tls.html#tls_tls_createsecurecontext_options) option
--   You might have the wrong value for the `secure` option. This should be set to `true` only for port 465. For every other port, it should be `false`. Setting it to `false` does not mean that Nodemailer would not use TLS. Nodemailer would still try to upgrade the connection to use TLS if the server supports it.
--   Older Node versions do not fully support the certificate chain of the newest Let's Encrypt certificates. Either set [tls.rejectUnauthorized](https://nodejs.org/dist/latest-v16.x/docs/api/tls.html#tlsconnectoptions-callback) to `false` to skip chain verification or upgrade your Node version
-
+```bash
+npm install mongodb
+# or ...
+yarn add mongodb
 ```
-let configOptions = {
-    host: "smtp.example.com",
-    port: 587,
-    tls: {
-        rejectUnauthorized: true,
-        minVersion: "TLSv1.2"
-    }
+
+This will download the MongoDB driver and add a dependency entry in your `package.json` file.
+
+If you are a Typescript user, you will need the Node.js type definitions to use the driver's definitions:
+
+```sh
+npm install -D @types/node
+```
+
+## Driver Extensions
+
+The MongoDB driver can optionally be enhanced by the following feature packages:
+
+Maintained by MongoDB:
+
+- Zstd network compression - [@mongodb-js/zstd](https://github.com/mongodb-js/zstd)
+- MongoDB field level and queryable encryption - [mongodb-client-encryption](https://github.com/mongodb/libmongocrypt#readme)
+- GSSAPI / SSPI / Kerberos authentication - [kerberos](https://github.com/mongodb-js/kerberos)
+
+Some of these packages include native C++ extensions.
+Consult the [trouble shooting guide here](https://github.com/mongodb/node-mongodb-native/blob/HEAD/etc/notes/native-extensions.md) if you run into compilation issues.
+
+Third party:
+
+- Snappy network compression - [snappy](https://github.com/Brooooooklyn/snappy)
+- AWS authentication - [@aws-sdk/credential-providers](https://github.com/aws/aws-sdk-js-v3/tree/main/packages/credential-providers)
+
+## Quick Start
+
+This guide will show you how to set up a simple application using Node.js and MongoDB. Its scope is only how to set up the driver and perform the simple CRUD operations. For more in-depth coverage, see the [official documentation](https://docs.mongodb.com/drivers/node/).
+
+### Create the `package.json` file
+
+First, create a directory where your application will live.
+
+```bash
+mkdir myProject
+cd myProject
+```
+
+Enter the following command and answer the questions to create the initial structure for your new project:
+
+```bash
+npm init -y
+```
+
+Next, install the driver as a dependency.
+
+```bash
+npm install mongodb
+```
+
+### Start a MongoDB Server
+
+For complete MongoDB installation instructions, see [the manual](https://docs.mongodb.org/manual/installation/).
+
+1. Download the right MongoDB version from [MongoDB](https://www.mongodb.org/downloads)
+2. Create a database directory (in this case under **/data**).
+3. Install and start a `mongod` process.
+
+```bash
+mongod --dbpath=/data
+```
+
+You should see the **mongod** process start up and print some status information.
+
+### Connect to MongoDB
+
+Create a new **app.js** file and add the following code to try out some basic CRUD
+operations using the MongoDB driver.
+
+Add code to connect to the server and the database **myProject**:
+
+> **NOTE:** Resolving DNS Connection issues
+>
+> Node.js 18 changed the default DNS resolution ordering from always prioritizing ipv4 to the ordering
+> returned by the DNS provider. In some environments, this can result in `localhost` resolving to
+> an ipv6 address instead of ipv4 and a consequent failure to connect to the server.
+>
+> This can be resolved by:
+>
+> - specifying the ip address family using the MongoClient `family` option (`MongoClient(<uri>, { family: 4 } )`)
+> - launching mongod or mongos with the ipv6 flag enabled ([--ipv6 mongod option documentation](https://www.mongodb.com/docs/manual/reference/program/mongod/#std-option-mongod.--ipv6))
+> - using a host of `127.0.0.1` in place of localhost
+> - specifying the DNS resolution ordering with the `--dns-resolution-order` Node.js command line argument (e.g. `node --dns-resolution-order=ipv4first`)
+
+```js
+const { MongoClient } = require('mongodb');
+// or as an es module:
+// import { MongoClient } from 'mongodb'
+
+// Connection URL
+const url = 'mongodb://localhost:27017';
+const client = new MongoClient(url);
+
+// Database Name
+const dbName = 'myProject';
+
+async function main() {
+  // Use connect method to connect to the server
+  await client.connect();
+  console.log('Connected successfully to server');
+  const db = client.db(dbName);
+  const collection = db.collection('documents');
+
+  // the following code examples can be pasted here...
+
+  return 'done.';
+}
+
+main()
+  .then(console.log)
+  .catch(console.error)
+  .finally(() => client.close());
+```
+
+Run your app from the command line with:
+
+```bash
+node app.js
+```
+
+The application should print **Connected successfully to server** to the console.
+
+### Insert a Document
+
+Add to **app.js** the following function which uses the **insertMany**
+method to add three documents to the **documents** collection.
+
+```js
+const insertResult = await collection.insertMany([{ a: 1 }, { a: 2 }, { a: 3 }]);
+console.log('Inserted documents =>', insertResult);
+```
+
+The **insertMany** command returns an object with information about the insert operations.
+
+### Find All Documents
+
+Add a query that returns all the documents.
+
+```js
+const findResult = await collection.find({}).toArray();
+console.log('Found documents =>', findResult);
+```
+
+This query returns all the documents in the **documents** collection.
+If you add this below the insertMany example you'll see the document's you've inserted.
+
+### Find Documents with a Query Filter
+
+Add a query filter to find only documents which meet the query criteria.
+
+```js
+const filteredDocs = await collection.find({ a: 3 }).toArray();
+console.log('Found documents filtered by { a: 3 } =>', filteredDocs);
+```
+
+Only the documents which match `'a' : 3` should be returned.
+
+### Update a document
+
+The following operation updates a document in the **documents** collection.
+
+```js
+const updateResult = await collection.updateOne({ a: 3 }, { $set: { b: 1 } });
+console.log('Updated documents =>', updateResult);
+```
+
+The method updates the first document where the field **a** is equal to **3** by adding a new field **b** to the document set to **1**. `updateResult` contains information about whether there was a matching document to update or not.
+
+### Remove a document
+
+Remove the document where the field **a** is equal to **3**.
+
+```js
+const deleteResult = await collection.deleteMany({ a: 3 });
+console.log('Deleted documents =>', deleteResult);
+```
+
+### Index a Collection
+
+[Indexes](https://docs.mongodb.org/manual/indexes/) can improve your application's
+performance. The following function creates an index on the **a** field in the
+**documents** collection.
+
+```js
+const indexName = await collection.createIndex({ a: 1 });
+console.log('index name =', indexName);
+```
+
+For more detailed information, see the [indexing strategies page](https://docs.mongodb.com/manual/applications/indexes/).
+
+## Error Handling
+
+If you need to filter certain errors from our driver we have a helpful tree of errors described in [etc/notes/errors.md](https://github.com/mongodb/node-mongodb-native/blob/HEAD/etc/notes/errors.md).
+
+It is our recommendation to use `instanceof` checks on errors and to avoid relying on parsing `error.message` and `error.name` strings in your code.
+We guarantee `instanceof` checks will pass according to semver guidelines, but errors may be sub-classed or their messages may change at any time, even patch releases, as we see fit to increase the helpfulness of the errors.
+
+Any new errors we add to the driver will directly extend an existing error class and no existing error will be moved to a different parent class outside of a major release.
+This means `instanceof` will always be able to accurately capture the errors that our driver throws.
+
+```typescript
+const client = new MongoClient(url);
+await client.connect();
+const collection = client.db().collection('collection');
+
+try {
+  await collection.insertOne({ _id: 1 });
+  await collection.insertOne({ _id: 1 }); // duplicate key error
+} catch (error) {
+  if (error instanceof MongoServerError) {
+    console.log(`Error worth logging: ${error}`); // special case for some reason
+  }
+  throw error; // still want to crash
 }
 ```
 
-#### I have issues with DNS / hosts file
+## Next Steps
 
-Node.js uses [c-ares](https://nodejs.org/en/docs/meta/topics/dependencies/#c-ares) to resolve domain names, not the DNS library provided by the system, so if you have some custom DNS routing set up, it might be ignored. Nodemailer runs [dns.resolve4()](https://nodejs.org/dist/latest-v16.x/docs/api/dns.html#dnsresolve4hostname-options-callback) and [dns.resolve6()](https://nodejs.org/dist/latest-v16.x/docs/api/dns.html#dnsresolve6hostname-options-callback) to resolve hostname into an IP address. If both calls fail, then Nodemailer will fall back to [dns.lookup()](https://nodejs.org/dist/latest-v16.x/docs/api/dns.html#dnslookuphostname-options-callback). If this does not work for you, you can hard code the IP address into the configuration like shown below. In that case, Nodemailer would not perform any DNS lookups.
+- [MongoDB Documentation](https://docs.mongodb.com/manual/)
+- [MongoDB Node Driver Documentation](https://docs.mongodb.com/drivers/node/)
+- [Read about Schemas](https://docs.mongodb.com/manual/core/data-modeling-introduction/)
+- [Star us on GitHub](https://github.com/mongodb/node-mongodb-native)
 
-```
-let configOptions = {
-    host: "1.2.3.4",
-    port: 465,
-    secure: true,
-    tls: {
-        // must provide server name, otherwise TLS certificate check will fail
-        servername: "example.com"
-    }
-}
-```
+## License
 
-#### I have an issue with TypeScript types
+[Apache 2.0](LICENSE.md)
 
-Nodemailer has official support for Node.js only. For anything related to TypeScript, you need to directly contact the authors of the [type definitions](https://www.npmjs.com/package/@types/nodemailer).
-
-#### I have a different problem
-
-If you are having issues with Nodemailer, then the best way to find help would be [Stack Overflow](https://stackoverflow.com/search?q=nodemailer) or revisit the [docs](https://nodemailer.com/about/).
-
-### License
-
-Nodemailer is licensed under the **MIT license**
-
----
-
-The Nodemailer logo was designed by [Sven Kristjansen](https://www.behance.net/kristjansen).
+© 2009-2012 Christian Amor Kvalheim
+© 2012-present MongoDB [Contributors](https://github.com/mongodb/node-mongodb-native/blob/HEAD/CONTRIBUTORS.md)
