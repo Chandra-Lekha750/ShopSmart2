@@ -1,57 +1,59 @@
-# path-is-absolute [![Build Status](https://travis-ci.org/sindresorhus/path-is-absolute.svg?branch=master)](https://travis-ci.org/sindresorhus/path-is-absolute)
+# object-assign [![Build Status](https://travis-ci.org/sindresorhus/object-assign.svg?branch=master)](https://travis-ci.org/sindresorhus/object-assign)
 
-> Node.js 0.12 [`path.isAbsolute()`](http://nodejs.org/api/path.html#path_path_isabsolute_path) [ponyfill](https://ponyfill.com)
+> ES2015 [`Object.assign()`](http://www.2ality.com/2014/01/object-assign.html) [ponyfill](https://ponyfill.com)
+
+
+## Use the built-in
+
+Node.js 4 and up, as well as every evergreen browser (Chrome, Edge, Firefox, Opera, Safari),
+support `Object.assign()` :tada:. If you target only those environments, then by all
+means, use `Object.assign()` instead of this package.
 
 
 ## Install
 
 ```
-$ npm install --save path-is-absolute
+$ npm install --save object-assign
 ```
 
 
 ## Usage
 
 ```js
-const pathIsAbsolute = require('path-is-absolute');
+const objectAssign = require('object-assign');
 
-// Running on Linux
-pathIsAbsolute('/home/foo');
-//=> true
-pathIsAbsolute('C:/Users/foo');
-//=> false
+objectAssign({foo: 0}, {bar: 1});
+//=> {foo: 0, bar: 1}
 
-// Running on Windows
-pathIsAbsolute('C:/Users/foo');
-//=> true
-pathIsAbsolute('/home/foo');
-//=> false
+// multiple sources
+objectAssign({foo: 0}, {bar: 1}, {baz: 2});
+//=> {foo: 0, bar: 1, baz: 2}
 
-// Running on any OS
-pathIsAbsolute.posix('/home/foo');
-//=> true
-pathIsAbsolute.posix('C:/Users/foo');
-//=> false
-pathIsAbsolute.win32('C:/Users/foo');
-//=> true
-pathIsAbsolute.win32('/home/foo');
-//=> false
+// overwrites equal keys
+objectAssign({foo: 0}, {foo: 1}, {foo: 2});
+//=> {foo: 2}
+
+// ignores null and undefined sources
+objectAssign({foo: 0}, null, {bar: 1}, undefined);
+//=> {foo: 0, bar: 1}
 ```
 
 
 ## API
 
-See the [`path.isAbsolute()` docs](http://nodejs.org/api/path.html#path_path_isabsolute_path).
+### objectAssign(target, [source, ...])
 
-### pathIsAbsolute(path)
+Assigns enumerable own properties of `source` objects to the `target` object and returns the `target` object. Additional `source` objects will overwrite previous ones.
 
-### pathIsAbsolute.posix(path)
 
-POSIX specific version.
+## Resources
 
-### pathIsAbsolute.win32(path)
+- [ES2015 spec - Object.assign](https://people.mozilla.org/~jorendorff/es6-draft.html#sec-object.assign)
 
-Windows specific version.
+
+## Related
+
+- [deep-assign](https://github.com/sindresorhus/deep-assign) - Recursive `Object.assign()`
 
 
 ## License

@@ -1,600 +1,729 @@
-## **6.13.0**
-- [New] `parse`: add `strictDepth` option (#511)
-- [Tests] use `npm audit` instead of `aud`
-
-## **6.12.3**
-- [Fix] `parse`: properly account for `strictNullHandling` when `allowEmptyArrays`
-- [meta] fix changelog indentation
-
-## **6.12.2**
-- [Fix] `parse`: parse encoded square brackets (#506)
-- [readme] add CII best practices badge
-
-## **6.12.1**
-- [Fix] `parse`: Disable `decodeDotInKeys` by default to restore previous behavior (#501)
-- [Performance] `utils`: Optimize performance under large data volumes, reduce memory usage, and speed up processing (#502)
-- [Refactor] `utils`: use `+=`
-- [Tests] increase coverage
-
-## **6.12.0**
-
-- [New] `parse`/`stringify`: add `decodeDotInKeys`/`encodeDotKeys` options (#488)
-- [New] `parse`: add `duplicates` option
-- [New] `parse`/`stringify`: add `allowEmptyArrays` option to allow [] in object values (#487)
-- [Refactor] `parse`/`stringify`: move allowDots config logic to its own variable
-- [Refactor] `stringify`: move option-handling code into `normalizeStringifyOptions`
-- [readme] update readme, add logos (#484)
-- [readme] `stringify`: clarify default `arrayFormat` behavior
-- [readme] fix line wrapping
-- [readme] remove dead badges
-- [Deps] update `side-channel`
-- [meta] make the dist build 50% smaller
-- [meta] add `sideEffects` flag
-- [meta] run build in prepack, not prepublish
-- [Tests] `parse`: remove useless tests; add coverage
-- [Tests] `stringify`: increase coverage
-- [Tests] use `mock-property`
-- [Tests] `stringify`: improve coverage
-- [Dev Deps] update `@ljharb/eslint-config `, `aud`, `has-override-mistake`, `has-property-descriptors`, `mock-property`, `npmignore`, `object-inspect`, `tape`
-- [Dev Deps] pin `glob`, since v10.3.8+ requires a broken `jackspeak`
-- [Dev Deps] pin `jackspeak` since 2.1.2+ depends on npm aliases, which kill the install process in npm < 6
-
-## **6.11.2**
-- [Fix] `parse`: Fix parsing when the global Object prototype is frozen (#473)
-- [Tests] add passing test cases with empty keys (#473)
-
-## **6.11.1**
-- [Fix] `stringify`: encode comma values more consistently (#463)
-- [readme] add usage of `filter` option for injecting custom serialization, i.e. of custom types (#447)
-- [meta] remove extraneous code backticks (#457)
-- [meta] fix changelog markdown
-- [actions] update checkout action
-- [actions] restrict action permissions
-- [Dev Deps] update `@ljharb/eslint-config`, `aud`, `object-inspect`, `tape`
-
-## **6.11.0**
-- [New] [Fix] `stringify`: revert 0e903c0; add `commaRoundTrip` option (#442)
-- [readme] fix version badge
-
-## **6.10.5**
-- [Fix] `stringify`: with `arrayFormat: comma`, properly include an explicit `[]` on a single-item array (#434)
-
-## **6.10.4**
-- [Fix] `stringify`: with `arrayFormat: comma`, include an explicit `[]` on a single-item array (#441)
-- [meta] use `npmignore` to autogenerate an npmignore file
-- [Dev Deps] update `eslint`, `@ljharb/eslint-config`, `aud`, `has-symbol`, `object-inspect`, `tape`
-
-## **6.10.3**
-- [Fix] `parse`: ignore `__proto__` keys (#428)
-- [Robustness] `stringify`: avoid relying on a global `undefined` (#427)
-- [actions] reuse common workflows
-- [Dev Deps] update `eslint`, `@ljharb/eslint-config`, `object-inspect`, `tape`
-
-## **6.10.2**
-- [Fix] `stringify`: actually fix cyclic references (#426)
-- [Fix] `stringify`: avoid encoding arrayformat comma when `encodeValuesOnly = true` (#424)
-- [readme] remove travis badge; add github actions/codecov badges; update URLs
-- [Docs] add note and links for coercing primitive values (#408)
-- [actions] update codecov uploader
-- [actions] update workflows
-- [Tests] clean up stringify tests slightly
-- [Dev Deps] update `eslint`, `@ljharb/eslint-config`, `aud`, `object-inspect`, `safe-publish-latest`, `tape`
-
-## **6.10.1**
-- [Fix] `stringify`: avoid exception on repeated object values (#402)
-
-## **6.10.0**
-- [New] `stringify`: throw on cycles, instead of an infinite loop (#395, #394, #393)
-- [New] `parse`: add `allowSparse` option for collapsing arrays with missing indices (#312)
-- [meta] fix README.md (#399)
-- [meta] only run `npm run dist` in publish, not install
-- [Dev Deps] update `eslint`, `@ljharb/eslint-config`, `aud`, `has-symbols`, `tape`
-- [Tests] fix tests on node v0.6
-- [Tests] use `ljharb/actions/node/install` instead of `ljharb/actions/node/run`
-- [Tests] Revert "[meta] ignore eclint transitive audit warning"
-
-## **6.9.7**
-- [Fix] `parse`: ignore `__proto__` keys (#428)
-- [Fix] `stringify`: avoid encoding arrayformat comma when `encodeValuesOnly = true` (#424)
-- [Robustness] `stringify`: avoid relying on a global `undefined` (#427)
-- [readme] remove travis badge; add github actions/codecov badges; update URLs
-- [Docs] add note and links for coercing primitive values (#408)
-- [Tests] clean up stringify tests slightly
-- [meta] fix README.md (#399)
-- Revert "[meta] ignore eclint transitive audit warning"
-- [actions] backport actions from main
-- [Dev Deps] backport updates from main
-
-## **6.9.6**
-- [Fix] restore `dist` dir; mistakenly removed in d4f6c32
-
-## **6.9.5**
-- [Fix] `stringify`: do not encode parens for RFC1738
-- [Fix] `stringify`: fix arrayFormat comma with empty array/objects (#350)
-- [Refactor] `format`: remove `util.assign` call
-- [meta] add "Allow Edits" workflow; update rebase workflow
-- [actions] switch Automatic Rebase workflow to `pull_request_target` event
-- [Tests] `stringify`: add tests for #378
-- [Tests] migrate tests to Github Actions
-- [Tests] run `nyc` on all tests; use `tape` runner
-- [Dev Deps] update `eslint`, `@ljharb/eslint-config`, `browserify`, `mkdirp`, `object-inspect`, `tape`; add `aud`
-
-## **6.9.4**
-- [Fix] `stringify`: when `arrayFormat` is `comma`, respect `serializeDate` (#364)
-- [Refactor] `stringify`: reduce branching (part of #350)
-- [Refactor] move `maybeMap` to `utils`
-- [Dev Deps] update `browserify`, `tape`
-
-## **6.9.3**
-- [Fix] proper comma parsing of URL-encoded commas (#361)
-- [Fix] parses comma delimited array while having percent-encoded comma treated as normal text (#336)
-
-## **6.9.2**
-- [Fix] `parse`: Fix parsing array from object with `comma` true (#359)
-- [Fix] `parse`: throw a TypeError instead of an Error for bad charset (#349)
-- [meta] ignore eclint transitive audit warning
-- [meta] fix indentation in package.json
-- [meta] add tidelift marketing copy
-- [Dev Deps] update `eslint`, `@ljharb/eslint-config`, `object-inspect`, `has-symbols`, `tape`, `mkdirp`, `iconv-lite`
-- [actions] add automatic rebasing / merge commit blocking
-
-## **6.9.1**
-- [Fix] `parse`: with comma true, handle field that holds an array of arrays (#335)
-- [Fix] `parse`: with comma true, do not split non-string values (#334)
-- [meta] add `funding` field
-- [Dev Deps] update `eslint`, `@ljharb/eslint-config`
-- [Tests] use shared travis-ci config
-
-## **6.9.0**
-- [New] `parse`/`stringify`: Pass extra key/value argument to `decoder` (#333)
-- [Dev Deps] update `eslint`, `@ljharb/eslint-config`, `evalmd`
-- [Tests] `parse`: add passing `arrayFormat` tests
-- [Tests] add `posttest` using `npx aud` to run `npm audit` without a lockfile
-- [Tests] up to `node` `v12.10`, `v11.15`, `v10.16`, `v8.16`
-- [Tests] `Buffer.from` in node v5.0-v5.9 and v4.0-v4.4 requires a TypedArray
-
-## **6.8.3**
-- [Fix] `parse`: ignore `__proto__` keys (#428)
-- [Robustness] `stringify`: avoid relying on a global `undefined` (#427)
-- [Fix] `stringify`: avoid encoding arrayformat comma when `encodeValuesOnly = true` (#424)
-- [readme] remove travis badge; add github actions/codecov badges; update URLs
-- [Tests] clean up stringify tests slightly
-- [Docs] add note and links for coercing primitive values (#408)
-- [meta] fix README.md (#399)
-- [actions] backport actions from main
-- [Dev Deps] backport updates from main
-- [Refactor] `stringify`: reduce branching
-- [meta] do not publish workflow files
-
-## **6.8.2**
-- [Fix] proper comma parsing of URL-encoded commas (#361)
-- [Fix] parses comma delimited array while having percent-encoded comma treated as normal text (#336)
-
-## **6.8.1**
-- [Fix] `parse`: Fix parsing array from object with `comma` true (#359)
-- [Fix] `parse`: throw a TypeError instead of an Error for bad charset (#349)
-- [Fix] `parse`: with comma true, handle field that holds an array of arrays (#335)
-- [fix] `parse`: with comma true, do not split non-string values (#334)
-- [meta] add tidelift marketing copy
-- [meta] add `funding` field
-- [Dev Deps] update `eslint`, `@ljharb/eslint-config`, `tape`, `safe-publish-latest`, `evalmd`, `has-symbols`, `iconv-lite`, `mkdirp`, `object-inspect`
-- [Tests] `parse`: add passing `arrayFormat` tests
-- [Tests] use shared travis-ci configs
-- [Tests] `Buffer.from` in node v5.0-v5.9 and v4.0-v4.4 requires a TypedArray
-- [actions] add automatic rebasing / merge commit blocking
-
-## **6.8.0**
-- [New] add `depth=false` to preserve the original key; [Fix] `depth=0` should preserve the original key (#326)
-- [New] [Fix] stringify symbols and bigints
-- [Fix] ensure node 0.12 can stringify Symbols
-- [Fix] fix for an impossible situation: when the formatter is called with a non-string value
-- [Refactor] `formats`: tiny bit of cleanup.
-- [Dev Deps] update `eslint`, `@ljharb/eslint-config`, `browserify`, `safe-publish-latest`, `iconv-lite`, `tape`
-- [Tests] add tests for `depth=0` and `depth=false` behavior, both current and intuitive/intended (#326)
-- [Tests] use `eclint` instead of `editorconfig-tools`
-- [docs] readme: add security note
-- [meta] add github sponsorship
-- [meta] add FUNDING.yml
-- [meta] Clean up license text so it’s properly detected as BSD-3-Clause
-
-## **6.7.3**
-- [Fix] `parse`: ignore `__proto__` keys (#428)
-- [Fix] `stringify`: avoid encoding arrayformat comma when `encodeValuesOnly = true` (#424)
-- [Robustness] `stringify`: avoid relying on a global `undefined` (#427)
-- [readme] remove travis badge; add github actions/codecov badges; update URLs
-- [Docs] add note and links for coercing primitive values (#408)
-- [meta] fix README.md (#399)
-- [meta] do not publish workflow files
-- [actions] backport actions from main
-- [Dev Deps] backport updates from main
-- [Tests] use `nyc` for coverage
-- [Tests] clean up stringify tests slightly
-
-## **6.7.2**
-- [Fix] proper comma parsing of URL-encoded commas (#361)
-- [Fix] parses comma delimited array while having percent-encoded comma treated as normal text (#336)
-
-## **6.7.1**
-- [Fix] `parse`: Fix parsing array from object with `comma` true (#359)
-- [Fix] `parse`: with comma true, handle field that holds an array of arrays (#335)
-- [fix] `parse`: with comma true, do not split non-string values (#334)
-- [Fix] `parse`: throw a TypeError instead of an Error for bad charset (#349)
-- [Fix] fix for an impossible situation: when the formatter is called with a non-string value
-- [Refactor] `formats`: tiny bit of cleanup.
-- readme: add security note
-- [meta] add tidelift marketing copy
-- [meta] add `funding` field
-- [meta] add FUNDING.yml
-- [meta] Clean up license text so it’s properly detected as BSD-3-Clause
-- [Dev Deps] update `eslint`, `@ljharb/eslint-config`, `tape`, `safe-publish-latest`, `evalmd`, `iconv-lite`, `mkdirp`, `object-inspect`, `browserify`
-- [Tests] `parse`: add passing `arrayFormat` tests
-- [Tests] use shared travis-ci configs
-- [Tests] `Buffer.from` in node v5.0-v5.9 and v4.0-v4.4 requires a TypedArray
-- [Tests] add tests for `depth=0` and `depth=false` behavior, both current and intuitive/intended
-- [Tests] use `eclint` instead of `editorconfig-tools`
-- [actions] add automatic rebasing / merge commit blocking
-
-## **6.7.0**
-- [New] `stringify`/`parse`: add `comma` as an `arrayFormat` option (#276, #219)
-- [Fix] correctly parse nested arrays (#212)
-- [Fix] `utils.merge`: avoid a crash with a null target and a truthy non-array source, also with an array source
-- [Robustness] `stringify`: cache `Object.prototype.hasOwnProperty`
-- [Refactor] `utils`: `isBuffer`: small tweak; add tests
-- [Refactor] use cached `Array.isArray`
-- [Refactor] `parse`/`stringify`: make a function to normalize the options
-- [Refactor] `utils`: reduce observable [[Get]]s
-- [Refactor] `stringify`/`utils`: cache `Array.isArray`
-- [Tests] always use `String(x)` over `x.toString()`
-- [Tests] fix Buffer tests to work in node < 4.5 and node < 5.10
-- [Tests] temporarily allow coverage to fail
-
-## **6.6.1**
-- [Fix] `parse`: ignore `__proto__` keys (#428)
-- [Fix] fix for an impossible situation: when the formatter is called with a non-string value
-- [Fix] `utils.merge`: avoid a crash with a null target and an array source
-- [Fix] `utils.merge`: avoid a crash with a null target and a truthy non-array source
-- [Fix] correctly parse nested arrays
-- [Robustness] `stringify`: avoid relying on a global `undefined` (#427)
-- [Robustness] `stringify`: cache `Object.prototype.hasOwnProperty`
-- [Refactor] `formats`: tiny bit of cleanup.
-- [Refactor] `utils`: `isBuffer`: small tweak; add tests
-- [Refactor]: `stringify`/`utils`: cache `Array.isArray`
-- [Refactor] `utils`: reduce observable [[Get]]s
-- [Refactor] use cached `Array.isArray`
-- [Refactor] `parse`/`stringify`: make a function to normalize the options
-- [readme] remove travis badge; add github actions/codecov badges; update URLs
-- [Docs] Clarify the need for "arrayLimit" option
-- [meta] fix README.md (#399)
-- [meta] do not publish workflow files
-- [meta] Clean up license text so it’s properly detected as BSD-3-Clause
-- [meta] add FUNDING.yml
-- [meta] Fixes typo in CHANGELOG.md
-- [actions] backport actions from main
-- [Tests] fix Buffer tests to work in node < 4.5 and node < 5.10
-- [Tests] always use `String(x)` over `x.toString()`
-- [Dev Deps] backport from main
-
-## **6.6.0**
-- [New] Add support for iso-8859-1, utf8 "sentinel" and numeric entities (#268)
-- [New] move two-value combine to a `utils` function (#189)
-- [Fix] `stringify`: fix a crash with `strictNullHandling` and a custom `filter`/`serializeDate` (#279)
-- [Fix] when `parseArrays` is false, properly handle keys ending in `[]` (#260)
-- [Fix] `stringify`: do not crash in an obscure combo of `interpretNumericEntities`, a bad custom `decoder`, & `iso-8859-1`
-- [Fix] `utils`: `merge`: fix crash when `source` is a truthy primitive & no options are provided
-- [refactor] `stringify`: Avoid arr = arr.concat(...), push to the existing instance (#269)
-- [Refactor] `parse`: only need to reassign the var once
-- [Refactor] `parse`/`stringify`: clean up `charset` options checking; fix defaults
-- [Refactor] add missing defaults
-- [Refactor] `parse`: one less `concat` call
-- [Refactor] `utils`: `compactQueue`: make it explicitly side-effecting
-- [Dev Deps] update `browserify`, `eslint`, `@ljharb/eslint-config`, `iconv-lite`, `safe-publish-latest`, `tape`
-- [Tests] up to `node` `v10.10`, `v9.11`, `v8.12`, `v6.14`, `v4.9`; pin included builds to LTS
-
-## **6.5.3**
-- [Fix] `parse`: ignore `__proto__` keys (#428)
-- [Fix] `utils.merge`: avoid a crash with a null target and a truthy non-array source
-- [Fix] correctly parse nested arrays
-- [Fix] `stringify`: fix a crash with `strictNullHandling` and a custom `filter`/`serializeDate` (#279)
-- [Fix] `utils`: `merge`: fix crash when `source` is a truthy primitive & no options are provided
-- [Fix] when `parseArrays` is false, properly handle keys ending in `[]`
-- [Fix] fix for an impossible situation: when the formatter is called with a non-string value
-- [Fix] `utils.merge`: avoid a crash with a null target and an array source
-- [Refactor] `utils`: reduce observable [[Get]]s
-- [Refactor] use cached `Array.isArray`
-- [Refactor] `stringify`: Avoid arr = arr.concat(...), push to the existing instance (#269)
-- [Refactor] `parse`: only need to reassign the var once
-- [Robustness] `stringify`: avoid relying on a global `undefined` (#427)
-- [readme] remove travis badge; add github actions/codecov badges; update URLs
-- [Docs] Clean up license text so it’s properly detected as BSD-3-Clause
-- [Docs] Clarify the need for "arrayLimit" option
-- [meta] fix README.md (#399)
-- [meta] add FUNDING.yml
-- [actions] backport actions from main
-- [Tests] always use `String(x)` over `x.toString()`
-- [Tests] remove nonexistent tape option
-- [Dev Deps] backport from main
-
-## **6.5.2**
-- [Fix] use `safer-buffer` instead of `Buffer` constructor
-- [Refactor] utils: `module.exports` one thing, instead of mutating `exports` (#230)
-- [Dev Deps] update `browserify`, `eslint`, `iconv-lite`, `safer-buffer`, `tape`, `browserify`
-
-## **6.5.1**
-- [Fix] Fix parsing & compacting very deep objects (#224)
-- [Refactor] name utils functions
-- [Dev Deps] update `eslint`, `@ljharb/eslint-config`, `tape`
-- [Tests] up to `node` `v8.4`; use `nvm install-latest-npm` so newer npm doesn’t break older node
-- [Tests] Use precise dist for Node.js 0.6 runtime (#225)
-- [Tests] make 0.6 required, now that it’s passing
-- [Tests] on `node` `v8.2`; fix npm on node 0.6
-
-## **6.5.0**
-- [New] add `utils.assign`
-- [New] pass default encoder/decoder to custom encoder/decoder functions (#206)
-- [New] `parse`/`stringify`: add `ignoreQueryPrefix`/`addQueryPrefix` options, respectively (#213)
-- [Fix] Handle stringifying empty objects with addQueryPrefix (#217)
-- [Fix] do not mutate `options` argument (#207)
-- [Refactor] `parse`: cache index to reuse in else statement (#182)
-- [Docs] add various badges to readme (#208)
-- [Dev Deps] update `eslint`, `browserify`, `iconv-lite`, `tape`
-- [Tests] up to `node` `v8.1`, `v7.10`, `v6.11`; npm v4.6 breaks on node < v1; npm v5+ breaks on node < v4
-- [Tests] add `editorconfig-tools`
-
-## **6.4.1**
-- [Fix] `parse`: ignore `__proto__` keys (#428)
-- [Fix] fix for an impossible situation: when the formatter is called with a non-string value
-- [Fix] use `safer-buffer` instead of `Buffer` constructor
-- [Fix] `utils.merge`: avoid a crash with a null target and an array source
-- [Fix] `utils.merge`: avoid a crash with a null target and a truthy non-array source
-- [Fix] `stringify`: fix a crash with `strictNullHandling` and a custom `filter`/`serializeDate` (#279)
-- [Fix] `utils`: `merge`: fix crash when `source` is a truthy primitive & no options are provided
-- [Fix] when `parseArrays` is false, properly handle keys ending in `[]`
-- [Robustness] `stringify`: avoid relying on a global `undefined` (#427)
-- [Refactor] use cached `Array.isArray`
-- [Refactor] `stringify`: Avoid arr = arr.concat(...), push to the existing instance (#269)
-- [readme] remove travis badge; add github actions/codecov badges; update URLs
-- [Docs] Clarify the need for "arrayLimit" option
-- [meta] fix README.md (#399)
-- [meta] Clean up license text so it’s properly detected as BSD-3-Clause
-- [meta] add FUNDING.yml
-- [actions] backport actions from main
-- [Tests] remove nonexistent tape option
-- [Dev Deps] backport from main
-
-## **6.4.0**
-- [New] `qs.stringify`: add `encodeValuesOnly` option
-- [Fix] follow `allowPrototypes` option during merge (#201, #201)
-- [Fix] support keys starting with brackets (#202, #200)
-- [Fix] chmod a-x
-- [Dev Deps] update `eslint`
-- [Tests] up to `node` `v7.7`, `v6.10`,` v4.8`; disable osx builds since they block linux builds
-- [eslint] reduce warnings
-
-## **6.3.3**
-- [Fix] `parse`: ignore `__proto__` keys (#428)
-- [Fix] fix for an impossible situation: when the formatter is called with a non-string value
-- [Fix] `utils.merge`: avoid a crash with a null target and an array source
-- [Fix] `utils.merge`: avoid a crash with a null target and a truthy non-array source
-- [Fix] `stringify`: fix a crash with `strictNullHandling` and a custom `filter`/`serializeDate` (#279)
-- [Fix] `utils`: `merge`: fix crash when `source` is a truthy primitive & no options are provided
-- [Fix] when `parseArrays` is false, properly handle keys ending in `[]`
-- [Robustness] `stringify`: avoid relying on a global `undefined` (#427)
-- [Refactor] use cached `Array.isArray`
-- [Refactor] `stringify`: Avoid arr = arr.concat(...), push to the existing instance (#269)
-- [Docs] Clarify the need for "arrayLimit" option
-- [meta] fix README.md (#399)
-- [meta] Clean up license text so it’s properly detected as BSD-3-Clause
-- [meta] add FUNDING.yml
-- [actions] backport actions from main
-- [Tests] use `safer-buffer` instead of `Buffer` constructor
-- [Tests] remove nonexistent tape option
-- [Dev Deps] backport from main
-
-## **6.3.2**
-- [Fix] follow `allowPrototypes` option during merge (#201, #200)
-- [Dev Deps] update `eslint`
-- [Fix] chmod a-x
-- [Fix] support keys starting with brackets (#202, #200)
-- [Tests] up to `node` `v7.7`, `v6.10`,` v4.8`; disable osx builds since they block linux builds
-
-## **6.3.1**
-- [Fix] ensure that `allowPrototypes: false` does not ever shadow Object.prototype properties (thanks, @snyk!)
-- [Dev Deps] update `eslint`, `@ljharb/eslint-config`, `browserify`, `iconv-lite`, `qs-iconv`, `tape`
-- [Tests] on all node minors; improve test matrix
-- [Docs] document stringify option `allowDots` (#195)
-- [Docs] add empty object and array values example (#195)
-- [Docs] Fix minor inconsistency/typo (#192)
-- [Docs] document stringify option `sort` (#191)
-- [Refactor] `stringify`: throw faster with an invalid encoder
-- [Refactor] remove unnecessary escapes (#184)
-- Remove contributing.md, since `qs` is no longer part of `hapi` (#183)
-
-## **6.3.0**
-- [New] Add support for RFC 1738 (#174, #173)
-- [New] `stringify`: Add `serializeDate` option to customize Date serialization (#159)
-- [Fix] ensure `utils.merge` handles merging two arrays
-- [Refactor] only constructors should be capitalized
-- [Refactor] capitalized var names are for constructors only
-- [Refactor] avoid using a sparse array
-- [Robustness] `formats`: cache `String#replace`
-- [Dev Deps] update `browserify`, `eslint`, `@ljharb/eslint-config`; add `safe-publish-latest`
-- [Tests] up to `node` `v6.8`, `v4.6`; improve test matrix
-- [Tests] flesh out arrayLimit/arrayFormat tests (#107)
-- [Tests] skip Object.create tests when null objects are not available
-- [Tests] Turn on eslint for test files (#175)
-
-## **6.2.4**
-- [Fix] `parse`: ignore `__proto__` keys (#428)
-- [Fix] `utils.merge`: avoid a crash with a null target and an array source
-- [Fix] `utils.merge`: avoid a crash with a null target and a truthy non-array source
-- [Fix] `utils`: `merge`: fix crash when `source` is a truthy primitive & no options are provided
-- [Fix] when `parseArrays` is false, properly handle keys ending in `[]`
-- [Robustness] `stringify`: avoid relying on a global `undefined` (#427)
-- [Refactor] use cached `Array.isArray`
-- [Docs] Clarify the need for "arrayLimit" option
-- [meta] fix README.md (#399)
-- [meta] Clean up license text so it’s properly detected as BSD-3-Clause
-- [meta] add FUNDING.yml
-- [actions] backport actions from main
-- [Tests] use `safer-buffer` instead of `Buffer` constructor
-- [Tests] remove nonexistent tape option
-- [Dev Deps] backport from main
-
-## **6.2.3**
-- [Fix] follow `allowPrototypes` option during merge (#201, #200)
-- [Fix] chmod a-x
-- [Fix] support keys starting with brackets (#202, #200)
-- [Tests] up to `node` `v7.7`, `v6.10`,` v4.8`; disable osx builds since they block linux builds
-
-## **6.2.2**
-- [Fix] ensure that `allowPrototypes: false` does not ever shadow Object.prototype properties
-
-## **6.2.1**
-- [Fix] ensure `key[]=x&key[]&key[]=y` results in 3, not 2, values
-- [Refactor] Be explicit and use `Object.prototype.hasOwnProperty.call`
-- [Tests] remove `parallelshell` since it does not reliably report failures
-- [Tests] up to `node` `v6.3`, `v5.12`
-- [Dev Deps] update `tape`, `eslint`, `@ljharb/eslint-config`, `qs-iconv`
-
-## [**6.2.0**](https://github.com/ljharb/qs/issues?milestone=36&state=closed)
-- [New] pass Buffers to the encoder/decoder directly (#161)
-- [New] add "encoder" and "decoder" options, for custom param encoding/decoding (#160)
-- [Fix] fix compacting of nested sparse arrays (#150)
-
-## **6.1.2**
-- [Fix] follow `allowPrototypes` option during merge (#201, #200)
-- [Fix] chmod a-x
-- [Fix] support keys starting with brackets (#202, #200)
-- [Tests] up to `node` `v7.7`, `v6.10`,` v4.8`; disable osx builds since they block linux builds
-
-## **6.1.1**
-- [Fix] ensure that `allowPrototypes: false` does not ever shadow Object.prototype properties
-
-## [**6.1.0**](https://github.com/ljharb/qs/issues?milestone=35&state=closed)
-- [New] allowDots option for `stringify` (#151)
-- [Fix] "sort" option should work at a depth of 3 or more (#151)
-- [Fix] Restore `dist` directory; will be removed in v7 (#148)
-
-## **6.0.4**
-- [Fix] follow `allowPrototypes` option during merge (#201, #200)
-- [Fix] chmod a-x
-- [Fix] support keys starting with brackets (#202, #200)
-- [Tests] up to `node` `v7.7`, `v6.10`,` v4.8`; disable osx builds since they block linux builds
-
-## **6.0.3**
-- [Fix] ensure that `allowPrototypes: false` does not ever shadow Object.prototype properties
-- [Fix] Restore `dist` directory; will be removed in v7 (#148)
-
-## [**6.0.2**](https://github.com/ljharb/qs/issues?milestone=33&state=closed)
-- Revert ES6 requirement and restore support for node down to v0.8.
-
-## [**6.0.1**](https://github.com/ljharb/qs/issues?milestone=32&state=closed)
-- [**#127**](https://github.com/ljharb/qs/pull/127) Fix engines definition in package.json
-
-## [**6.0.0**](https://github.com/ljharb/qs/issues?milestone=31&state=closed)
-- [**#124**](https://github.com/ljharb/qs/issues/124) Use ES6 and drop support for node < v4
-
-## **5.2.1**
-- [Fix] ensure `key[]=x&key[]&key[]=y` results in 3, not 2, values
-
-## [**5.2.0**](https://github.com/ljharb/qs/issues?milestone=30&state=closed)
-- [**#64**](https://github.com/ljharb/qs/issues/64) Add option to sort object keys in the query string
-
-## [**5.1.0**](https://github.com/ljharb/qs/issues?milestone=29&state=closed)
-- [**#117**](https://github.com/ljharb/qs/issues/117) make URI encoding stringified results optional
-- [**#106**](https://github.com/ljharb/qs/issues/106) Add flag `skipNulls` to optionally skip null values in stringify
-
-## [**5.0.0**](https://github.com/ljharb/qs/issues?milestone=28&state=closed)
-- [**#114**](https://github.com/ljharb/qs/issues/114) default allowDots to false
-- [**#100**](https://github.com/ljharb/qs/issues/100) include dist to npm
-
-## [**4.0.0**](https://github.com/ljharb/qs/issues?milestone=26&state=closed)
-- [**#98**](https://github.com/ljharb/qs/issues/98) make returning plain objects and allowing prototype overwriting properties optional
-
-## [**3.1.0**](https://github.com/ljharb/qs/issues?milestone=24&state=closed)
-- [**#89**](https://github.com/ljharb/qs/issues/89) Add option to disable "Transform dot notation to bracket notation"
-
-## [**3.0.0**](https://github.com/ljharb/qs/issues?milestone=23&state=closed)
-- [**#80**](https://github.com/ljharb/qs/issues/80) qs.parse silently drops properties
-- [**#77**](https://github.com/ljharb/qs/issues/77) Perf boost
-- [**#60**](https://github.com/ljharb/qs/issues/60) Add explicit option to disable array parsing
-- [**#74**](https://github.com/ljharb/qs/issues/74) Bad parse when turning array into object
-- [**#81**](https://github.com/ljharb/qs/issues/81) Add a `filter` option
-- [**#68**](https://github.com/ljharb/qs/issues/68) Fixed issue with recursion and passing strings into objects.
-- [**#66**](https://github.com/ljharb/qs/issues/66) Add mixed array and object dot notation support Closes: #47
-- [**#76**](https://github.com/ljharb/qs/issues/76) RFC 3986
-- [**#85**](https://github.com/ljharb/qs/issues/85) No equal sign
-- [**#84**](https://github.com/ljharb/qs/issues/84) update license attribute
-
-## [**2.4.1**](https://github.com/ljharb/qs/issues?milestone=20&state=closed)
-- [**#73**](https://github.com/ljharb/qs/issues/73) Property 'hasOwnProperty' of object #<Object> is not a function
-
-## [**2.4.0**](https://github.com/ljharb/qs/issues?milestone=19&state=closed)
-- [**#70**](https://github.com/ljharb/qs/issues/70) Add arrayFormat option
-
-## [**2.3.3**](https://github.com/ljharb/qs/issues?milestone=18&state=closed)
-- [**#59**](https://github.com/ljharb/qs/issues/59) make sure array indexes are >= 0, closes #57
-- [**#58**](https://github.com/ljharb/qs/issues/58) make qs usable for browser loader
-
-## [**2.3.2**](https://github.com/ljharb/qs/issues?milestone=17&state=closed)
-- [**#55**](https://github.com/ljharb/qs/issues/55) allow merging a string into an object
-
-## [**2.3.1**](https://github.com/ljharb/qs/issues?milestone=16&state=closed)
-- [**#52**](https://github.com/ljharb/qs/issues/52) Return "undefined" and "false" instead of throwing "TypeError".
-
-## [**2.3.0**](https://github.com/ljharb/qs/issues?milestone=15&state=closed)
-- [**#50**](https://github.com/ljharb/qs/issues/50) add option to omit array indices, closes #46
-
-## [**2.2.5**](https://github.com/ljharb/qs/issues?milestone=14&state=closed)
-- [**#39**](https://github.com/ljharb/qs/issues/39) Is there an alternative to Buffer.isBuffer?
-- [**#49**](https://github.com/ljharb/qs/issues/49) refactor utils.merge, fixes #45
-- [**#41**](https://github.com/ljharb/qs/issues/41) avoid browserifying Buffer, for #39
-
-## [**2.2.4**](https://github.com/ljharb/qs/issues?milestone=13&state=closed)
-- [**#38**](https://github.com/ljharb/qs/issues/38) how to handle object keys beginning with a number
-
-## [**2.2.3**](https://github.com/ljharb/qs/issues?milestone=12&state=closed)
-- [**#37**](https://github.com/ljharb/qs/issues/37) parser discards first empty value in array
-- [**#36**](https://github.com/ljharb/qs/issues/36) Update to lab 4.x
-
-## [**2.2.2**](https://github.com/ljharb/qs/issues?milestone=11&state=closed)
-- [**#33**](https://github.com/ljharb/qs/issues/33) Error when plain object in a value
-- [**#34**](https://github.com/ljharb/qs/issues/34) use Object.prototype.hasOwnProperty.call instead of obj.hasOwnProperty
-- [**#24**](https://github.com/ljharb/qs/issues/24) Changelog? Semver?
-
-## [**2.2.1**](https://github.com/ljharb/qs/issues?milestone=10&state=closed)
-- [**#32**](https://github.com/ljharb/qs/issues/32) account for circular references properly, closes #31
-- [**#31**](https://github.com/ljharb/qs/issues/31) qs.parse stackoverflow on circular objects
-
-## [**2.2.0**](https://github.com/ljharb/qs/issues?milestone=9&state=closed)
-- [**#26**](https://github.com/ljharb/qs/issues/26) Don't use Buffer global if it's not present
-- [**#30**](https://github.com/ljharb/qs/issues/30) Bug when merging non-object values into arrays
-- [**#29**](https://github.com/ljharb/qs/issues/29) Don't call Utils.clone at the top of Utils.merge
-- [**#23**](https://github.com/ljharb/qs/issues/23) Ability to not limit parameters?
-
-## [**2.1.0**](https://github.com/ljharb/qs/issues?milestone=8&state=closed)
-- [**#22**](https://github.com/ljharb/qs/issues/22) Enable using a RegExp as delimiter
-
-## [**2.0.0**](https://github.com/ljharb/qs/issues?milestone=7&state=closed)
-- [**#18**](https://github.com/ljharb/qs/issues/18) Why is there arrayLimit?
-- [**#20**](https://github.com/ljharb/qs/issues/20) Configurable parametersLimit
-- [**#21**](https://github.com/ljharb/qs/issues/21) make all limits optional, for #18, for #20
-
-## [**1.2.2**](https://github.com/ljharb/qs/issues?milestone=6&state=closed)
-- [**#19**](https://github.com/ljharb/qs/issues/19) Don't overwrite null values
-
-## [**1.2.1**](https://github.com/ljharb/qs/issues?milestone=5&state=closed)
-- [**#16**](https://github.com/ljharb/qs/issues/16) ignore non-string delimiters
-- [**#15**](https://github.com/ljharb/qs/issues/15) Close code block
-
-## [**1.2.0**](https://github.com/ljharb/qs/issues?milestone=4&state=closed)
-- [**#12**](https://github.com/ljharb/qs/issues/12) Add optional delim argument
-- [**#13**](https://github.com/ljharb/qs/issues/13) fix #11: flattened keys in array are now correctly parsed
-
-## [**1.1.0**](https://github.com/ljharb/qs/issues?milestone=3&state=closed)
-- [**#7**](https://github.com/ljharb/qs/issues/7) Empty values of a POST array disappear after being submitted
-- [**#9**](https://github.com/ljharb/qs/issues/9) Should not omit equals signs (=) when value is null
-- [**#6**](https://github.com/ljharb/qs/issues/6) Minor grammar fix in README
-
-## [**1.0.2**](https://github.com/ljharb/qs/issues?milestone=2&state=closed)
-- [**#5**](https://github.com/ljharb/qs/issues/5) array holes incorrectly copied into object on large index
+# CHANGELOG
+
+## 6.9.2 2023-05-11
+
+-   Fix uncaught exception on invalid attachment content payload
+
+## 6.9.1 2023-01-27
+
+-   Fix base64 encoding for emoji bytes in encoded words
+
+## 6.9.0 2023-01-12
+
+-   Do not throw if failed to resolve IPv4 addresses
+-   Include EHLO extensions in the send response
+-   fix sendMail function: callback should be optional
+
+## 6.8.0 2022-09-28
+
+-   Add DNS timeout (huksley)
+-   add dns.REFUSED (lucagianfelici)
+
+## 6.7.8 2022-08-11
+
+-   Allow to use multiple Reply-To addresses
+
+## 6.7.7 2022-07-06
+
+-   Resolver fixes
+
+## 6.7.5 2022-05-04
+
+-   No changes, pushing a new README to npmjs.org
+
+## 6.7.4 2022-04-29
+
+-   Ensure compatibility with Node 18
+-   Replaced Travis with Github Actions
+
+## 6.7.3 2022-03-21
+
+-   Typo fixes
+-   Added stale issue automation fir Github
+-   Add Infomaniak config to well known service (popod)
+-   Update Outlook/Hotmail host in well known services (popod)
+-   fix: DSN recipient gets ignored (KornKalle)
+
+## 6.7.2 2021-11-26
+
+-   Fix proxies for account verification
+
+## 6.7.1 2021-11-15
+
+-   fix verify on ses-transport (stanofsky)
+
+## 6.7.0 2021-10-11
+
+-   Updated DNS resolving logic. If there are multiple responses for a A/AAAA record, then loop these randomly instead of only caching the first one
+
+## 6.6.5 2021-09-23
+
+-   Replaced Object.values() and Array.flat() with polyfills to allow using Nodemailer in Node v6+
+
+## 6.6.4 2021-09-22
+
+-   Better compatibility with IPv6-only SMTP hosts (oxzi)
+-   Fix ses verify for sdk v3 (hannesvdvreken)
+-   Added SECURITY.txt for contact info
+
+## 6.6.3 2021-07-14
+
+-   Do not show passwords in SMTP transaction logs. All passwords used in logging are replaced by `"/* secret */"`
+
+## 6.6.1 2021-05-23
+
+-   Fixed address formatting issue where newlines in an email address, if provided via address object, were not properly removed. Reported by tmazeika (#1289)
+
+## 6.6.0 2021-04-28
+
+-   Added new option `newline` for MailComposer
+-   aws ses connection verification (Ognjen Jevremovic)
+
+## 6.5.0 2021-02-26
+
+-   Pass through textEncoding to subnodes
+-   Added support for AWS SES v3 SDK
+-   Fixed tests
+
+## 6.4.18 2021-02-11
+
+-   Updated README
+
+## 6.4.17 2020-12-11
+
+-   Allow mixing attachments with caendar alternatives
+
+## 6.4.16 2020-11-12
+
+-   Applied updated prettier formating rules
+
+## 6.4.15 2020-11-06
+
+-   Minor changes in header key casing
+
+## 6.4.14 2020-10-14
+
+-   Disabled postinstall script
+
+## 6.4.13 2020-10-02
+
+-   Fix normalizeHeaderKey method for single node messages
+
+## 6.4.12 2020-09-30
+
+-   Better handling of attachment filenames that include quote symbols
+-   Includes all information from the oath2 error response in the error message (Normal Gaussian) [1787f227]
+
+## 6.4.11 2020-07-29
+
+-   Fixed escape sequence handling in address parsing
+
+## 6.4.10 2020-06-17
+
+-   Fixed RFC822 output for MailComposer when using invalid content-type value. Mostly relevant if message attachments have stragne content-type values set.
+
+## 6.4.7 2020-05-28
+
+-   Always set charset=utf-8 for Content-Type headers
+-   Catch error when using invalid crypto.sign input
+
+## 6.4.6 2020-03-20
+
+-   fix: `requeueAttempts=n` should requeue `n` times (Patrick Malouin) [a27ed2f7]
+
+## 6.4.4 2020-03-01
+
+-   Add `options.forceAuth` for SMTP (Patrick Malouin) [a27ed2f7]
+
+## 6.4.3 2020-02-22
+
+-   Added an option to specify max number of requeues when connection closes unexpectedly (Igor Sechyn) [8a927f5a]
+
+## 6.4.2 2019-12-11
+
+-   Fixed bug where array item was used with a potentially empty array
+
+## 6.4.1 2019-12-07
+
+-   Fix processing server output with unterminated responses
+
+## 6.4.0 2019-12-04
+
+-   Do not use auth if server does not advertise AUTH support [f419b09d]
+-   add dns.CONNREFUSED (Hiroyuki Okada) [5c4c8ca8]
+
+## 6.3.1 2019-10-09
+
+-   Ignore "end" events because it might be "error" after it (dex4er) [72bade9]
+-   Set username and password on the connection proxy object correctly (UsamaAshraf) [250b1a8]
+-   Support more DNS errors (madarche) [2391aa4]
+
+## 6.3.0 2019-07-14
+
+-   Added new option to pass a set of httpHeaders to be sent when fetching attachments. See [PR #1034](https://github.com/nodemailer/nodemailer/pull/1034)
+
+## 6.2.1 2019-05-24
+
+-   No changes. It is the same as 6.2.0 that was accidentally published as 6.2.1 to npm
+
+## 6.2.0 2019-05-24
+
+-   Added new option for addressparser: `flatten`. If true then ignores group names and returns a single list of all addresses
+
+## 6.1.1 2019-04-20
+
+-   Fixed regression bug with missing smtp `authMethod` property
+
+## 6.1.0 2019-04-06
+
+-   Added new message property `amp` for providing AMP4EMAIL content
+
+## 6.0.0 2019-03-25
+
+-   SMTPConnection: use removeListener instead of removeAllListeners (xr0master) [ddc4af15]
+    Using removeListener should fix memory leak with Node.js streams
+
+## 5.1.1 2019-01-09
+
+-   Added missing option argument for custom auth
+
+## 5.1.0 2019-01-09
+
+-   Official support for custom authentication methods and examples (examples/custom-auth-async.js and examples/custom-auth-cb.js)
+
+## 5.0.1 2019-01-09
+
+-   Fixed regression error to support Node versions lower than 6.11
+-   Added expiremental custom authentication support
+
+## 5.0.0 2018-12-28
+
+-   Start using dns.resolve() instead of dns.lookup() for resolving SMTP hostnames. Might be breaking change on some environments so upgrade with care
+-   Show more logs for renewing OAuth2 tokens, previously it was not possible to see what actually failed
+
+## 4.7.0 2018-11-19
+
+-   Cleaned up List-\* header generation
+-   Fixed 'full' return option for DSN (klaronix) [23b93a3b]
+-   Support promises `for mailcomposer.build()`
+
+## 4.6.8 2018-08-15
+
+-   Use first IP address from DNS resolution when using a proxy (Limbozz) [d4ca847c]
+-   Return raw email from SES transport (gabegorelick) [3aa08967]
+
+## 4.6.7 2018-06-15
+
+-   Added option `skipEncoding` to JSONTransport
+
+## 4.6.6 2018-06-10
+
+-   Fixes mime encoded-word compatibility issue with invalid clients like Zimbra
+
+## 4.6.5 2018-05-23
+
+-   Fixed broken DKIM stream in Node.js v10
+-   Updated error messages for SMTP responses to not include a newline
+
+## 4.6.4 2018-03-31
+
+-   Readded logo author link to README that was accidentally removed a while ago
+
+## 4.6.3 2018-03-13
+
+-   Removed unneeded dependency
+
+## 4.6.2 2018-03-06
+
+-   When redirecting URL calls then do not include original POST content
+
+## 4.6.1 2018-03-06
+
+-   Fixed Smtp connection freezing, when trying to send after close / quit (twawszczak) [73d3911c]
+
+## 4.6.0 2018-02-22
+
+-   Support socks module v2 in addition to v1 [e228bcb2]
+-   Fixed invalid promise return value when using createTestAccount [5524e627]
+-   Allow using local addresses [8f6fa35f]
+
+## 4.5.0 2018-02-21
+
+-   Added new message transport option `normalizeHeaderKey(key)=>normalizedKey` for custom header formatting
+
+## 4.4.2 2018-01-20
+
+-   Added sponsors section to README
+-   enclose encodeURIComponent in try..catch to handle invalid urls
+
+## 4.4.1 2017-12-08
+
+-   Better handling of unexpectedly dropping connections
+
+## 4.4.0 2017-11-10
+
+-   Changed default behavior for attachment option contentTransferEncoding. If it is unset then base64 encoding is used for the attachment. If it is set to false then previous default applies (base64 for most, 7bit for text)
+
+## 4.3.1 2017-10-25
+
+-   Fixed a confict with Electron.js where timers do not have unref method
+
+## 4.3.0 2017-10-23
+
+-   Added new mail object method `mail.normalize(cb)` that should make creating HTTP API based transports much easier
+
+## 4.2.0 2017-10-13
+
+-   Expose streamed messages size and timers in info response
+
+## v4.1.3 2017-10-06
+
+-   Allow generating preview links without calling createTestAccount first
+
+## v4.1.2 2017-10-03
+
+-   No actual changes. Needed to push updated README to npmjs
+
+## v4.1.1 2017-09-25
+
+-   Fixed JSONTransport attachment handling
+
+## v4.1.0 2017-08-28
+
+-   Added new methods `createTestAccount` and `getTestMessageUrl` to use autogenerated email accounts from https://Ethereal.email
+
+## v4.0.1 2017-04-13
+
+-   Fixed issue with LMTP and STARTTLS
+
+## v4.0.0 2017-04-06
+
+-   License changed from EUPLv1.1 to MIT
+
+## v3.1.8 2017-03-21
+
+-   Fixed invalid List-\* header generation
+
+## v3.1.7 2017-03-14
+
+-   Emit an error if STARTTLS ends with connection being closed
+
+## v3.1.6 2017-03-14
+
+-   Expose last server response for smtpConnection
+
+## v3.1.5 2017-03-08
+
+-   Fixed SES transport, added missing `response` value
+
+## v3.1.4 2017-02-26
+
+-   Fixed DKIM calculation for empty body
+-   Ensure linebreak after message content. This fixes DKIM signatures for non-multipart messages where input did not end with a newline
+
+## v3.1.3 2017-02-17
+
+-   Fixed missing `transport.verify()` methods for SES transport
+
+## v3.1.2 2017-02-17
+
+-   Added missing error handlers for Sendmail, SES and Stream transports. If a messages contained an invalid URL as attachment then these transports threw an uncatched error
+
+## v3.1.1 2017-02-13
+
+-   Fixed missing `transport.on('idle')` and `transport.isIdle()` methods for SES transports
+
+## v3.1.0 2017-02-13
+
+-   Added built-in transport for AWS SES. [Docs](http://localhost:1313/transports/ses/)
+-   Updated stream transport to allow building JSON strings. [Docs](http://localhost:1313/transports/stream/#json-transport)
+-   Added new method _mail.resolveAll_ that fetches all attachments and such to be able to more easily build API-based transports
+
+## v3.0.2 2017-02-04
+
+-   Fixed a bug with OAuth2 login where error callback was fired twice if getToken was not available.
+
+## v3.0.1 2017-02-03
+
+-   Fixed a bug where Nodemailer threw an exception if `disableFileAccess` option was used
+-   Added FLOSS [exception declaration](FLOSS_EXCEPTIONS.md)
+
+## v3.0.0 2017-01-31
+
+-   Initial version of Nodemailer 3
+
+This update brings a lot of breaking changes:
+
+-   License changed from MIT to **EUPL-1.1**. This was possible as the new version of Nodemailer is a major rewrite. The features I don't have ownership for, were removed or reimplemented. If there's still some snippets in the code that have vague ownership then notify <mailto:andris@kreata.ee> about the conflicting code and I'll fix it.
+-   Requires **Node.js v6+**
+-   All **templating is gone**. It was too confusing to use and to be really universal a huge list of different renderers would be required. Nodemailer is about email, not about parsing different template syntaxes
+-   **No NTLM authentication**. It was too difficult to re-implement. If you still need it then it would be possible to introduce a pluggable SASL interface where you could load the NTLM module in your own code and pass it to Nodemailer. Currently this is not possible.
+-   **OAuth2 authentication** is built in and has a different [configuration](https://nodemailer.com/smtp/oauth2/). You can use both user (3LO) and service (2LO) accounts to generate access tokens from Nodemailer. Additionally there's a new feature to authenticate differently for every message – useful if your application sends on behalf of different users instead of a single sender.
+-   **Improved Calendaring**. Provide an ical file to Nodemailer to send out [calendar events](https://nodemailer.com/message/calendar-events/).
+
+And also some non-breaking changes:
+
+-   All **dependencies were dropped**. There is exactly 0 dependencies needed to use Nodemailer. This brings the installation time of Nodemailer from NPM down to less than 2 seconds
+-   **Delivery status notifications** added to Nodemailer
+-   Improved and built-in **DKIM** signing of messages. Previously you needed an external module for this and it did quite a lousy job with larger messages
+-   **Stream transport** to return a RFC822 formatted message as a stream. Useful if you want to use Nodemailer as a preprocessor and not for actual delivery.
+-   **Sendmail** transport built-in, no need for external transport plugin
+
+See [Nodemailer.com](https://nodemailer.com/) for full documentation
+
+## 2.7.0 2016-12-08
+
+-   Bumped mailcomposer that generates encoded-words differently which might break some tests
+
+## 2.6.0 2016-09-05
+
+-   Added new options disableFileAccess and disableUrlAccess
+-   Fixed envelope handling where cc/bcc fields were ignored in the envelope object
+
+## 2.4.2 2016-05-25
+
+-   Removed shrinkwrap file. Seemed to cause more trouble than help
+
+## 2.4.1 2016-05-12
+
+-   Fixed outdated shrinkwrap file
+
+## 2.4.0 2016-05-11
+
+-   Bumped mailcomposer module to allow using `false` as attachment filename (suppresses filename usage)
+-   Added NTLM authentication support
+
+## 2.3.2 2016-04-11
+
+-   Bumped smtp transport modules to get newest smtp-connection that fixes SMTPUTF8 support for internationalized email addresses
+
+## 2.3.1 2016-04-08
+
+-   Bumped mailcomposer to have better support for message/822 attachments
+
+## 2.3.0 2016-03-03
+
+-   Fixed a bug with attachment filename that contains mixed unicode and dashes
+-   Added built-in support for proxies by providing a new SMTP option `proxy` that takes a proxy configuration url as its value
+-   Added option `transport` to dynamically load transport plugins
+-   Do not require globally installed grunt-cli
+
+## 2.2.1 2016-02-20
+
+-   Fixed a bug in SMTP requireTLS option that was broken
+
+## 2.2.0 2016-02-18
+
+-   Removed the need to use `clone` dependency
+-   Added new method `verify` to check SMTP configuration
+-   Direct transport uses STARTTLS by default, fallbacks to plaintext if STARTTLS fails
+-   Added new message option `list` for setting List-\* headers
+-   Add simple proxy support with `getSocket` method
+-   Added new message option `textEncoding`. If `textEncoding` is not set then detect best encoding automatically
+-   Added new message option `icalEvent` to embed iCalendar events. Example [here](examples/ical-event.js)
+-   Added new attachment option `raw` to use prepared MIME contents instead of generating a new one. This might be useful when you want to handcraft some parts of the message yourself, for example if you want to inject a PGP encrypted message as the contents of a MIME node
+-   Added new message option `raw` to use an existing MIME message instead of generating a new one
+
+## 2.1.0 2016-02-01
+
+Republishing 2.1.0-rc.1 as stable. To recap, here's the notable changes between v2.0 and v2.1:
+
+-   Implemented templating support. You can either use a simple built-in renderer or some external advanced renderer, eg. [node-email-templates](https://github.com/niftylettuce/node-email-templates). Templating [docs](http://nodemailer.com/2-0-0-beta/templating/).
+-   Updated smtp-pool to emit 'idle' events in order to handle message queue more effectively
+-   Updated custom header handling, works everywhere the same now, no differences between adding custom headers to the message or to an attachment
+
+## 2.1.0-rc.1 2016-01-25
+
+Sneaked in some new features even though it is already rc
+
+-   If a SMTP pool is closed while there are still messages in a queue, the message callbacks are invoked with an error
+-   In case of SMTP pool the transporter emits 'idle' when there is a free connection slot available
+-   Added method `isIdle()` that checks if a pool has still some free connection slots available
+
+## 2.1.0-rc.0 2016-01-20
+
+-   Bumped dependency versions
+
+## 2.1.0-beta.3 2016-01-20
+
+-   Added support for node-email-templates templating in addition to the built-in renderer
+
+## 2.1.0-beta.2 2016-01-20
+
+-   Implemented simple templating feature
+
+## 2.1.0-beta.1 2016-01-20
+
+-   Allow using prepared header values that are not folded or encoded by Nodemailer
+
+## 2.1.0-beta.0 2016-01-20
+
+-   Use the same header custom structure for message root, attachments and alternatives
+-   Ensure that Message-Id exists when accessing message
+-   Allow using array values for custom headers (inserts every value in its own row)
+
+## 2.0.0 2016-01-11
+
+-   Released rc.2 as stable
+
+## 2.0.0-rc.2 2016-01-04
+
+-   Locked dependencies
+
+## 2.0.0-beta.2 2016-01-04
+
+-   Updated documentation to reflect changes with SMTP handling
+-   Use beta versions for smtp/pool/direct transports
+-   Updated logging
+
+## 2.0.0-beta.1 2016-01-03
+
+-   Use bunyan compatible logger instead of the emit('log') style
+-   Outsourced some reusable methods to nodemailer-shared
+-   Support setting direct/smtp/pool with the default configuration
+
+## 2.0.0-beta.0 2015-12-31
+
+-   Stream errors are not silently swallowed
+-   Do not use format=flowed
+-   Use nodemailer-fetch to fetch URL streams
+-   jshint replaced by eslint
+
+## v1.11.0 2015-12-28
+
+Allow connection url based SMTP configurations
+
+## v1.10.0 2015-11-13
+
+Added `defaults` argument for `createTransport` to predefine commonn values (eg. `from` address)
+
+## v1.9.0 2015-11-09
+
+Returns a Promise for `sendMail` if callback is not defined
+
+## v1.8.0 2015-10-08
+
+Added priority option (high, normal, low) for setting Importance header
+
+## v1.7.0 2015-10-06
+
+Replaced hyperquest with needle. Fixes issues with compressed data and redirects
+
+## v1.6.0 2015-10-05
+
+Maintenance release. Bumped dependencies to get support for unicode filenames for QQ webmail and to support emoji in filenames
+
+## v1.5.0 2015-09-24
+
+Use mailcomposer instead of built in solution to generate message sources. Bumped libmime gives better quoted-printable handling.
+
+## v1.4.0 2015-06-27
+
+Added new message option `watchHtml` to specify Apple Watch specific HTML part of the message. See [this post](https://litmus.com/blog/how-to-send-hidden-version-email-apple-watch) for details
+
+## v1.3.4 2015-04-25
+
+Maintenance release, bumped buildmail version to get fixed format=flowed handling
+
+## v1.3.3 2015-04-25
+
+Maintenance release, bumped dependencies
+
+## v1.3.2 2015-03-09
+
+Maintenance release, upgraded dependencies. Replaced simplesmtp based tests with smtp-server based ones.
+
+## v1.3.0 2014-09-12
+
+Maintenance release, upgrades buildmail and libmime. Allows using functions as transform plugins and fixes issue with unicode filenames in Gmail.
+
+## v1.2.2 2014-09-05
+
+Proper handling of data uris as attachments. Attachment `path` property can also be defined as a data uri, not just regular url or file path.
+
+## v1.2.1 2014-08-21
+
+Bumped libmime and mailbuild versions to properly handle filenames with spaces (short ascii only filenames with spaces were left unquoted).
+
+## v1.2.0 2014-08-18
+
+Allow using encoded strings as attachments. Added new property `encoding` which defines the encoding used for a `content` string. If encoding is set, the content value is converted to a Buffer value using the defined encoding before usage. Useful for including binary attachemnts in JSON formatted email objects.
+
+## v1.1.2 2014-08-18
+
+Return deprecatin error for v0.x style configuration
+
+## v1.1.1 2014-07-30
+
+Bumped nodemailer-direct-transport dependency. Updated version includes a bugfix for Stream nodes handling. Important only if use direct-transport with Streams (not file paths or urls) as attachment content.
+
+## v1.1.0 2014-07-29
+
+Added new method `resolveContent()` to get the html/text/attachment content as a String or Buffer.
+
+## v1.0.4 2014-07-23
+
+Bugfix release. HTML node was instered twice if the message consisted of a HTML content (but no text content) + at least one attachment with CID + at least one attachment without CID. In this case the HTML node was inserted both to the root level multipart/mixed section and to the multipart/related sub section
+
+## v1.0.3 2014-07-16
+
+Fixed a bug where Nodemailer crashed if the message content type was multipart/related
+
+## v1.0.2 2014-07-16
+
+Upgraded nodemailer-smtp-transport to 0.1.11\. The docs state that for SSL you should use 'secure' option but the underlying smtp-connection module used 'secureConnection' for this purpose. Fixed smpt-connection to match the docs.
+
+## v1.0.1 2014-07-15
+
+Implemented missing #close method that is passed to the underlying transport object. Required by the smtp pool.
+
+## v1.0.0 2014-07-15
+
+Total rewrite. See migration guide here: <http://www.andrisreinman.com/nodemailer-v1-0/#migrationguide>
+
+## v0.7.1 2014-07-09
+
+-   Upgraded aws-sdk to 2.0.5
+
+## v0.7.0 2014-06-17
+
+-   Bumped version to v0.7.0
+-   Fix AWS-SES usage [5b6bc144]
+-   Replace current SES with new SES using AWS-SDK (Elanorr) [c79d797a]
+-   Updated README.md about Node Email Templates (niftylettuce) [e52bef81]
+
+## v0.6.5 2014-05-15
+
+-   Bumped version to v0.6.5
+-   Use tildes instead of carets for dependency listing [5296ce41]
+-   Allow clients to set a custom identityString (venables) [5373287d]
+-   bugfix (adding "-i" to sendmail command line for each new mail) by copying this.args (vrodic) [05a8a9a3]
+-   update copyright (gdi2290) [3a6cba3a]
+
+## v0.6.4 2014-05-13
+
+-   Bumped version to v0.6.4
+-   added npmignore, bumped dependencies [21bddcd9]
+-   Add AOL to well-known services (msouce) [da7dd3b7]
+
+## v0.6.3 2014-04-16
+
+-   Bumped version to v0.6.3
+-   Upgraded simplesmtp dependency [dd367f59]
+
+## v0.6.2 2014-04-09
+
+-   Bumped version to v0.6.2
+-   Added error option to Stub transport [c423acad]
+-   Use SVG npm badge (t3chnoboy) [677117b7]
+-   add SendCloud to well known services (haio) [43c358e0]
+-   High-res build-passing and NPM module badges (sahat) [9fdc37cd]
+
+## v0.6.1 2014-01-26
+
+-   Bumped version to v0.6.1
+-   Do not throw on multiple errors from sendmail command [c6e2cd12]
+-   Do not require callback for pickup, fixes #238 [93eb3214]
+-   Added AWSSecurityToken information to README, fixes #235 [58e921d1]
+-   Added Nodemailer logo [06b7d1a8]
+
+## v0.6.0 2013-12-30
+
+-   Bumped version to v0.6.0
+-   Allow defining custom transport methods [ec5b48ce]
+-   Return messageId with responseObject for all built in transport methods [74445cec]
+-   Bumped dependency versions for mailcomposer and readable-stream [9a034c34]
+-   Changed pickup argument name to 'directory' [01c3ea53]
+-   Added support for IIS pickup directory with PICKUP transport (philipproplesch) [36940b59..360a2878]
+-   Applied common styles [9e93a409]
+-   Updated readme [c78075e7]
+
+## v0.5.15 2013-12-13
+
+-   bumped version to v0.5.15
+-   Updated README, added global options info for setting uo transports [554bb0e5]
+-   Resolve public hostname, if resolveHostname property for a transport object is set to `true` [9023a6e1..4c66b819]
+
+## v0.5.14 2013-12-05
+
+-   bumped version to v0.5.14
+-   Expose status for direct messages [f0312df6]
+-   Allow to skip the X-Mailer header if xMailer value is set to 'false' [f2c20a68]
+
+## v0.5.13 2013-12-03
+
+-   bumped version to v0.5.13
+-   Use the name property from the transport object to use for the domain part of message-id values (1598eee9)
+
+## v0.5.12 2013-12-02
+
+-   bumped version to v0.5.12
+-   Expose transport method and transport module version if available [a495106e]
+-   Added 'he' module instead of using custom html entity decoding [c197d102]
+-   Added xMailer property for transport configuration object to override X-Mailer value [e8733a61]
+-   Updated README, added description for 'mail' method [e1f5f3a6]
+
+## v0.5.11 2013-11-28
+
+-   bumped version to v0.5.11
+-   Updated mailcomposer version. Replaces ent with he [6a45b790e]
+
+## v0.5.10 2013-11-26
+
+-   bumped version to v0.5.10
+-   added shorthand function mail() for direct transport type [88129bd7]
+-   minor tweaks and typo fixes [f797409e..ceac0ca4]
+
+## v0.5.9 2013-11-25
+
+-   bumped version to v0.5.9
+-   Update for 'direct' handling [77b84e2f]
+-   do not require callback to be provided for 'direct' type [ec51c79f]
+
+## v0.5.8 2013-11-22
+
+-   bumped version to v0.5.8
+-   Added support for 'direct' transport [826f226d..0dbbcbbc]
+
+## v0.5.7 2013-11-18
+
+-   bumped version to v0.5.7
+-   Replace \r\n by \n in Sendmail transport (rolftimmermans) [fed2089e..616ec90c] A lot of sendmail implementations choke on \r\n newlines and require \n This commit addresses this by transforming all \r\n sequences passed to the sendmail command with \n
+
+## v0.5.6 2013-11-15
+
+-   bumped version to v0.5.6
+-   Upgraded mailcomposer dependency to 0.2.4 [e5ff9c40]
+-   Removed noCR option [e810d1b8]
+-   Update wellknown.js, added FastMail (k-j-kleist) [cf930f6d]
+
+## v0.5.5 2013-10-30
+
+-   bumped version to v0.5.5
+-   Updated mailcomposer dependnecy version to 0.2.3
+-   Remove legacy code - node v0.4 is not supported anymore anyway
+-   Use hostname (autodetected or from the options.name property) for Message-Id instead of "Nodemailer" (helps a bit when messages are identified as spam)
+-   Added maxMessages info to README
+
+## v0.5.4 2013-10-29
+
+-   bumped version to v0.5.4
+-   added "use strict" statements
+-   Added DSN info to README
+-   add support for QQ enterprise email (coderhaoxin)
+-   Add a Bitdeli Badge to README
+-   DSN options Passthrought into simplesmtp. (irvinzz)
+
+## v0.5.3 2013-10-03
+
+-   bumped version v0.5.3
+-   Using a stub transport to prevent sendmail from being called during a test. (jsdevel)
+-   closes #78: sendmail transport does not work correctly on Unix machines. (jsdevel)
+-   Updated PaaS Support list to include Modulus. (fiveisprime)
+-   Translate self closing break tags to newline (kosmasgiannis)
+-   fix typos (aeosynth)
+
+## v0.5.2 2013-07-25
+
+-   bumped version v0.5.2
+-   Merge pull request #177 from MrSwitch/master Fixing Amazon SES, fatal error caused by bad connection

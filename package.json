@@ -1,74 +1,46 @@
 {
-  "name": "nodemon",
-  "homepage": "https://nodemon.io",
-  "author": {
-    "name": "Remy Sharp",
-    "url": "https://github.com/remy"
-  },
-  "bin": {
-    "nodemon": "./bin/nodemon.js"
-  },
-  "engines": {
-    "node": ">=8.10.0"
-  },
-  "repository": {
-    "type": "git",
-    "url": "https://github.com/remy/nodemon.git"
-  },
-  "description": "Simple monitor script for use during development of a Node.js app.",
-  "keywords": [
-    "cli",
-    "monitor",
-    "monitor",
-    "development",
-    "restart",
-    "autoload",
-    "reload",
-    "terminal"
-  ],
-  "license": "MIT",
-  "main": "./lib/nodemon",
-  "scripts": {
-    "commitmsg": "commitlint -e",
-    "coverage": "istanbul cover _mocha -- --timeout 30000 --ui bdd --reporter list test/**/*.test.js",
-    "lint": "eslint lib/**/*.js",
-    "test": "npm run lint && npm run spec",
-    "spec": "for FILE in test/**/*.test.js; do echo $FILE; TEST=1 mocha --exit --timeout 30000 $FILE; if [ $? -ne 0 ]; then exit 1; fi; sleep 1; done",
-    "postspec": "npm run clean",
-    "clean": "rm -rf test/fixtures/test*.js test/fixtures/test*.md",
-    "web": "node web",
-    "semantic-release": "semantic-release",
-    "prepush": "npm run lint",
-    "killall": "ps auxww | grep node | grep -v grep | awk '{ print $2 }' | xargs kill -9"
-  },
-  "devDependencies": {
-    "@commitlint/cli": "^11.0.0",
-    "@commitlint/config-conventional": "^11.0.0",
-    "async": "1.4.2",
-    "coffee-script": "~1.7.1",
-    "eslint": "^7.32.0",
-    "husky": "^7.0.4",
-    "mocha": "^2.5.3",
-    "nyc": "^15.1.0",
-    "proxyquire": "^1.8.0",
-    "semantic-release": "^18.0.0",
-    "should": "~4.0.0"
-  },
-  "dependencies": {
-    "chokidar": "^3.5.2",
-    "debug": "^3.2.7",
-    "ignore-by-default": "^1.0.1",
-    "minimatch": "^3.1.2",
-    "pstree.remy": "^1.1.8",
-    "semver": "^5.7.1",
-    "simple-update-notifier": "^1.0.7",
-    "supports-color": "^5.5.0",
-    "touch": "^3.1.0",
-    "undefsafe": "^2.0.5"
-  },
-  "version": "2.0.22",
-  "funding": {
-    "type": "opencollective",
-    "url": "https://opencollective.com/nodemon"
-  }
+    "name": "nodemailer",
+    "version": "6.9.2",
+    "description": "Easy as cake e-mail sending from your Node.js applications",
+    "main": "lib/nodemailer.js",
+    "scripts": {
+        "test": "grunt --trace-warnings"
+    },
+    "repository": {
+        "type": "git",
+        "url": "https://github.com/nodemailer/nodemailer.git"
+    },
+    "keywords": [
+        "Nodemailer"
+    ],
+    "author": "Andris Reinman",
+    "license": "MIT",
+    "bugs": {
+        "url": "https://github.com/nodemailer/nodemailer/issues"
+    },
+    "homepage": "https://nodemailer.com/",
+    "devDependencies": {
+        "@aws-sdk/client-ses": "3.329.0",
+        "aws-sdk": "2.1376.0",
+        "bunyan": "1.8.15",
+        "chai": "4.3.7",
+        "eslint-config-nodemailer": "1.2.0",
+        "eslint-config-prettier": "8.8.0",
+        "grunt": "1.6.1",
+        "grunt-cli": "1.4.3",
+        "grunt-eslint": "24.1.0",
+        "grunt-mocha-test": "0.13.3",
+        "libbase64": "1.2.1",
+        "libmime": "5.2.1",
+        "libqp": "2.0.1",
+        "mocha": "10.2.0",
+        "nodemailer-ntlm-auth": "1.0.3",
+        "proxy": "1.0.2",
+        "proxy-test-server": "1.0.0",
+        "sinon": "15.0.4",
+        "smtp-server": "3.11.0"
+    },
+    "engines": {
+        "node": ">=6.0.0"
+    }
 }

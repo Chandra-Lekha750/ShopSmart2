@@ -1,38 +1,67 @@
-# Developer's Certificate of Origin 1.1
+# Contribute
 
-By making a contribution to this project, I certify that:
+## Introduction
 
-* (a) The contribution was created in whole or in part by me and I
-  have the right to submit it under the open source license
-  indicated in the file; or
+First, thank you for considering contributing to nodemailer! It's people like you that make the open source community such a great community! 😊
 
-* (b) The contribution is based upon previous work that, to the best
-  of my knowledge, is covered under an appropriate open source
-  license and I have the right under that license to submit that
-  work with modifications, whether created in whole or in part
-  by me, under the same open source license (unless I am
-  permitted to submit under a different license), as indicated
-  in the file; or
+We welcome any type of contribution, not only code. You can help with 
+- **QA**: file bug reports, the more details you can give the better (e.g. screenshots with the console open)
+- **Marketing**: writing blog posts, howto's, printing stickers, ...
+- **Community**: presenting the project at meetups, organizing a dedicated meetup for the local community, ...
+- **Code**: take a look at the [open issues](https://github.com/nodemailer/nodemailer/issues). Even if you can't write code, commenting on them, showing that you care about a given issue matters. It helps us triage them.
+- **Money**: we welcome financial contributions in full transparency on our [open collective](https://opencollective.com/nodemailer).
 
-* (c) The contribution was provided directly to me by some other
-  person who certified (a), (b) or (c) and I have not modified
-  it.
+## Your First Contribution
 
-* (d) I understand and agree that this project and the contribution
-  are public and that a record of the contribution (including all
-  personal information I submit with it, including my sign-off) is
-  maintained indefinitely and may be redistributed consistent with
-  this project or the open source license(s) involved.
+Working on your first Pull Request? You can learn how from this *free* series, [How to Contribute to an Open Source Project on GitHub](https://egghead.io/series/how-to-contribute-to-an-open-source-project-on-github).
 
-## Moderation Policy
+## Submitting code
 
-The [Node.js Moderation Policy] applies to this WG.
+Any code change should be submitted as a pull request. The description should explain what the code does and give steps to execute it. The pull request should also contain tests.
 
-## Code of Conduct
+## Code review process
 
-The [Node.js Code of Conduct][] applies to this WG.
+The bigger the pull request, the longer it will take to review and merge. Try to break down large pull requests in smaller chunks that are easier to review and merge.
+It is also always helpful to have some context for your pull request. What was the purpose? Why does it matter to you?
 
-[Node.js Code of Conduct]:
-https://github.com/nodejs/node/blob/master/CODE_OF_CONDUCT.md
-[Node.js Moderation Policy]:
-https://github.com/nodejs/TSC/blob/master/Moderation-Policy.md
+## Financial contributions
+
+We also welcome financial contributions in full transparency on our [open collective](https://opencollective.com/nodemailer).
+Anyone can file an expense. If the expense makes sense for the development of the community, it will be "merged" in the ledger of our open collective by the core contributors and the person who filed the expense will be reimbursed.
+
+## Questions
+
+If you have any questions, create an [issue](https://github.com/nodemailer/nodemailer/issues) (protip: do a quick search first to see if someone else didn't ask the same question before!).
+You can also reach us at hello@nodemailer.opencollective.com.
+
+## Credits
+
+### Contributors
+
+Thank you to all the people who have already contributed to nodemailer!
+<a href="graphs/contributors"><img src="https://opencollective.com/nodemailer/contributors.svg?width=890" /></a>
+
+
+### Backers
+
+Thank you to all our backers! [[Become a backer](https://opencollective.com/nodemailer#backer)]
+
+<a href="https://opencollective.com/nodemailer#backers" target="_blank"><img src="https://opencollective.com/nodemailer/backers.svg?width=890"></a>
+
+
+### Sponsors
+
+Thank you to all our sponsors! (please ask your company to also support this open source project by [becoming a sponsor](https://opencollective.com/nodemailer#sponsor))
+
+<a href="https://opencollective.com/nodemailer/sponsor/0/website" target="_blank"><img src="https://opencollective.com/nodemailer/sponsor/0/avatar.svg"></a>
+<a href="https://opencollective.com/nodemailer/sponsor/1/website" target="_blank"><img src="https://opencollective.com/nodemailer/sponsor/1/avatar.svg"></a>
+<a href="https://opencollective.com/nodemailer/sponsor/2/website" target="_blank"><img src="https://opencollective.com/nodemailer/sponsor/2/avatar.svg"></a>
+<a href="https://opencollective.com/nodemailer/sponsor/3/website" target="_blank"><img src="https://opencollective.com/nodemailer/sponsor/3/avatar.svg"></a>
+<a href="https://opencollective.com/nodemailer/sponsor/4/website" target="_blank"><img src="https://opencollective.com/nodemailer/sponsor/4/avatar.svg"></a>
+<a href="https://opencollective.com/nodemailer/sponsor/5/website" target="_blank"><img src="https://opencollective.com/nodemailer/sponsor/5/avatar.svg"></a>
+<a href="https://opencollective.com/nodemailer/sponsor/6/website" target="_blank"><img src="https://opencollective.com/nodemailer/sponsor/6/avatar.svg"></a>
+<a href="https://opencollective.com/nodemailer/sponsor/7/website" target="_blank"><img src="https://opencollective.com/nodemailer/sponsor/7/avatar.svg"></a>
+<a href="https://opencollective.com/nodemailer/sponsor/8/website" target="_blank"><img src="https://opencollective.com/nodemailer/sponsor/8/avatar.svg"></a>
+<a href="https://opencollective.com/nodemailer/sponsor/9/website" target="_blank"><img src="https://opencollective.com/nodemailer/sponsor/9/avatar.svg"></a>
+
+<!-- This `CONTRIBUTING.md` is based on @nayafia's template https://github.com/nayafia/contributing-template -->

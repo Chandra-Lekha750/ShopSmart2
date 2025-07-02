@@ -1,53 +1,11 @@
-'use strict';
-var utils = require('../utils');
-var add = require('./add');
-var parse = require('./parse');
+const path = require('path');
 
-// exported
-var rules = { ignore: [], watch: [] };
-
-/**
- * Loads a nodemon config file and populates the ignore
- * and watch rules with it's contents, and calls callback
- * with the new rules
- *
- * @param  {String} filename
- * @param  {Function} callback
- */
-function load(filename, callback) {
-  parse(filename, function (err, result) {
-    if (err) {
-      // we should have bombed already, but
-      utils.log.error(err);
-      callback(err);
-    }
-
-    if (result.raw) {
-      result.raw.forEach(add.bind(null, rules, 'ignore'));
-    } else {
-      result.ignore.forEach(add.bind(null, rules, 'ignore'));
-      result.watch.forEach(add.bind(null, rules, 'watch'));
-    }
-
-    callback(null, rules);
-  });
-}
+const includeDir = path.relative('.', __dirname);
 
 module.exports = {
-  reset: function () { // just used for testing
-    rules.ignore.length = rules.watch.length = 0;
-    delete rules.ignore.re;
-    delete rules.watch.re;
-  },
-  load: load,
-  ignore: {
-    test: add.bind(null, rules, 'ignore'),
-    add: add.bind(null, rules, 'ignore'),
-  },
-  watch: {
-    test: add.bind(null, rules, 'watch'),
-    add: add.bind(null, rules, 'watch'),
-  },
-  add: add.bind(null, rules),
-  rules: rules,
+  include: `"${__dirname}"`, // deprecated, can be removed as part of 4.0.0
+  include_dir: includeDir,
+  gyp: path.join(includeDir, 'node_api.gyp:nothing'),
+  isNodeApiBuiltin: true,
+  needsFlag: false
 };
