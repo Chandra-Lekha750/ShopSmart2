@@ -1,31 +1,77 @@
-import { createRequire as ___createRequire } from 'module'; const require = ___createRequire(import.meta.url);
-import { BuildEnvironment, DevEnvironment, build, buildErrorMessage, createBuilder, createFilter, createIdResolver, createLogger, createRunnableDevEnvironment, createServer, createServerHotChannel, createServerModuleRunner, createServerModuleRunnerTransport, defineConfig, fetchModule, formatPostcssSourceMap, isCSSRequest, isFileLoadingAllowed, isFileServingAllowed, isRunnableDevEnvironment, loadConfigFromFile, loadEnv, mergeAlias, mergeConfig, normalizePath, optimizeDeps, perEnvironmentPlugin, perEnvironmentState, preprocessCSS, preview, resolveConfig, resolveEnvPrefix, rollupVersion, runnerImport, searchForWorkspaceRoot, send, sortUserPlugins, ssrTransform, transformWithEsbuild } from "./chunks/dep-Bsx9IwL8.js";
-import { DEFAULT_CLIENT_CONDITIONS, DEFAULT_CLIENT_MAIN_FIELDS, DEFAULT_SERVER_CONDITIONS, DEFAULT_SERVER_MAIN_FIELDS, VERSION, defaultAllowedOrigins } from "./chunks/dep-Ctugieod.js";
-import { parseAst, parseAstAsync } from "rollup/parseAst";
-import { version as esbuildVersion } from "esbuild";
+'use strict';
+const singleComment = Symbol('singleComment');
+const multiComment = Symbol('multiComment');
+const stripWithoutWhitespace = () => '';
+const stripWithWhitespace = (string, start, end) => string.slice(start, end).replace(/\S/g, ' ');
 
-//#region src/node/server/environments/fetchableEnvironments.ts
-function createFetchableDevEnvironment(name, config, context) {
-	if (typeof Request === "undefined" || typeof Response === "undefined") throw new TypeError("FetchableDevEnvironment requires a global `Request` and `Response` object.");
-	if (!context.handleRequest) throw new TypeError("FetchableDevEnvironment requires a `handleRequest` method during initialisation.");
-	return new FetchableDevEnvironment(name, config, context);
-}
-function isFetchableDevEnvironment(environment) {
-	return environment instanceof FetchableDevEnvironment;
-}
-var FetchableDevEnvironment = class extends DevEnvironment {
-	_handleRequest;
-	constructor(name, config, context) {
-		super(name, config, context);
-		this._handleRequest = context.handleRequest;
+const isEscaped = (jsonString, quotePosition) => {
+	let index = quotePosition - 1;
+	let backslashCount = 0;
+
+	while (jsonString[index] === '\\') {
+		index -= 1;
+		backslashCount += 1;
 	}
-	async dispatchFetch(request) {
-		if (!(request instanceof Request)) throw new TypeError("FetchableDevEnvironment `dispatchFetch` must receive a `Request` object.");
-		const response = await this._handleRequest(request);
-		if (!(response instanceof Response)) throw new TypeError("FetchableDevEnvironment `context.handleRequest` must return a `Response` object.");
-		return response;
-	}
+
+	return Boolean(backslashCount % 2);
 };
 
-//#endregion
-export { BuildEnvironment, DevEnvironment, build, buildErrorMessage, createBuilder, createFetchableDevEnvironment, createFilter, createIdResolver, createLogger, createRunnableDevEnvironment, createServer, createServerHotChannel, createServerModuleRunner, createServerModuleRunnerTransport, defaultAllowedOrigins, DEFAULT_CLIENT_CONDITIONS as defaultClientConditions, DEFAULT_CLIENT_MAIN_FIELDS as defaultClientMainFields, DEFAULT_SERVER_CONDITIONS as defaultServerConditions, DEFAULT_SERVER_MAIN_FIELDS as defaultServerMainFields, defineConfig, esbuildVersion, fetchModule, formatPostcssSourceMap, isCSSRequest, isFetchableDevEnvironment, isFileLoadingAllowed, isFileServingAllowed, isRunnableDevEnvironment, loadConfigFromFile, loadEnv, mergeAlias, mergeConfig, ssrTransform as moduleRunnerTransform, normalizePath, optimizeDeps, parseAst, parseAstAsync, perEnvironmentPlugin, perEnvironmentState, preprocessCSS, preview, resolveConfig, resolveEnvPrefix, rollupVersion, runnerImport, searchForWorkspaceRoot, send, sortUserPlugins, transformWithEsbuild, VERSION as version };
+module.exports = (jsonString, options = {}) => {
+	if (typeof jsonString !== 'string') {
+		throw new TypeError(`Expected argument \`jsonString\` to be a \`string\`, got \`${typeof jsonString}\``);
+	}
+
+	const strip = options.whitespace === false ? stripWithoutWhitespace : stripWithWhitespace;
+
+	let insideString = false;
+	let insideComment = false;
+	let offset = 0;
+	let result = '';
+
+	for (let i = 0; i < jsonString.length; i++) {
+		const currentCharacter = jsonString[i];
+		const nextCharacter = jsonString[i + 1];
+
+		if (!insideComment && currentCharacter === '"') {
+			const escaped = isEscaped(jsonString, i);
+			if (!escaped) {
+				insideString = !insideString;
+			}
+		}
+
+		if (insideString) {
+			continue;
+		}
+
+		if (!insideComment && currentCharacter + nextCharacter === '//') {
+			result += jsonString.slice(offset, i);
+			offset = i;
+			insideComment = singleComment;
+			i++;
+		} else if (insideComment === singleComment && currentCharacter + nextCharacter === '\r\n') {
+			i++;
+			insideComment = false;
+			result += strip(jsonString, offset, i);
+			offset = i;
+			continue;
+		} else if (insideComment === singleComment && currentCharacter === '\n') {
+			insideComment = false;
+			result += strip(jsonString, offset, i);
+			offset = i;
+		} else if (!insideComment && currentCharacter + nextCharacter === '/*') {
+			result += jsonString.slice(offset, i);
+			offset = i;
+			insideComment = multiComment;
+			i++;
+			continue;
+		} else if (insideComment === multiComment && currentCharacter + nextCharacter === '*/') {
+			i++;
+			insideComment = false;
+			result += strip(jsonString, offset, i + 1);
+			offset = i + 1;
+			continue;
+		}
+	}
+
+	return result + (insideComment ? strip(jsonString.slice(offset)) : jsonString.slice(offset));
+};
