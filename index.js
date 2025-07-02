@@ -1,162 +1,213 @@
-/**
- * Helpers.
- */
-
-var s = 1000;
-var m = s * 60;
-var h = m * 60;
-var d = h * 24;
-var w = d * 7;
-var y = d * 365.25;
-
-/**
- * Parse or format the given `val`.
- *
- * Options:
- *
- *  - `long` verbose formatting [false]
- *
- * @param {String|Number} val
- * @param {Object} [options]
- * @throws {Error} throw an error if val is not a non-empty string or a number
- * @return {String|Number}
- * @api public
- */
-
-module.exports = function (val, options) {
-  options = options || {};
-  var type = typeof val;
-  if (type === 'string' && val.length > 0) {
-    return parse(val);
-  } else if (type === 'number' && isFinite(val)) {
-    return options.long ? fmtLong(val) : fmtShort(val);
-  }
-  throw new Error(
-    'val is not a non-empty string or a valid number. val=' +
-      JSON.stringify(val)
-  );
-};
-
-/**
- * Parse the given `str` and return milliseconds.
- *
- * @param {String} str
- * @return {Number}
- * @api private
- */
-
-function parse(str) {
-  str = String(str);
-  if (str.length > 100) {
-    return;
-  }
-  var match = /^(-?(?:\d+)?\.?\d+) *(milliseconds?|msecs?|ms|seconds?|secs?|s|minutes?|mins?|m|hours?|hrs?|h|days?|d|weeks?|w|years?|yrs?|y)?$/i.exec(
-    str
-  );
-  if (!match) {
-    return;
-  }
-  var n = parseFloat(match[1]);
-  var type = (match[2] || 'ms').toLowerCase();
-  switch (type) {
-    case 'years':
-    case 'year':
-    case 'yrs':
-    case 'yr':
-    case 'y':
-      return n * y;
-    case 'weeks':
-    case 'week':
-    case 'w':
-      return n * w;
-    case 'days':
-    case 'day':
-    case 'd':
-      return n * d;
-    case 'hours':
-    case 'hour':
-    case 'hrs':
-    case 'hr':
-    case 'h':
-      return n * h;
-    case 'minutes':
-    case 'minute':
-    case 'mins':
-    case 'min':
-    case 'm':
-      return n * m;
-    case 'seconds':
-    case 'second':
-    case 'secs':
-    case 'sec':
-    case 's':
-      return n * s;
-    case 'milliseconds':
-    case 'millisecond':
-    case 'msecs':
-    case 'msec':
-    case 'ms':
-      return n;
-    default:
-      return undefined;
-  }
+"use strict";
+Object.defineProperty(exports, "__esModule", { value: true });
+exports.CommaAndColonSeparatedRecord = exports.ConnectionString = exports.redactConnectionString = void 0;
+const whatwg_url_1 = require("whatwg-url");
+const redact_1 = require("./redact");
+Object.defineProperty(exports, "redactConnectionString", { enumerable: true, get: function () { return redact_1.redactConnectionString; } });
+const DUMMY_HOSTNAME = '__this_is_a_placeholder__';
+function connectionStringHasValidScheme(connectionString) {
+    return (connectionString.startsWith('mongodb://') ||
+        connectionString.startsWith('mongodb+srv://'));
 }
-
-/**
- * Short format for `ms`.
- *
- * @param {Number} ms
- * @return {String}
- * @api private
- */
-
-function fmtShort(ms) {
-  var msAbs = Math.abs(ms);
-  if (msAbs >= d) {
-    return Math.round(ms / d) + 'd';
-  }
-  if (msAbs >= h) {
-    return Math.round(ms / h) + 'h';
-  }
-  if (msAbs >= m) {
-    return Math.round(ms / m) + 'm';
-  }
-  if (msAbs >= s) {
-    return Math.round(ms / s) + 's';
-  }
-  return ms + 'ms';
+const HOSTS_REGEX = /^(?<protocol>[^/]+):\/\/(?:(?<username>[^:@]*)(?::(?<password>[^@]*))?@)?(?<hosts>(?!:)[^/?@]*)(?<rest>.*)/;
+class CaseInsensitiveMap extends Map {
+    delete(name) {
+        return super.delete(this._normalizeKey(name));
+    }
+    get(name) {
+        return super.get(this._normalizeKey(name));
+    }
+    has(name) {
+        return super.has(this._normalizeKey(name));
+    }
+    set(name, value) {
+        return super.set(this._normalizeKey(name), value);
+    }
+    _normalizeKey(name) {
+        name = `${name}`;
+        for (const key of this.keys()) {
+            if (key.toLowerCase() === name.toLowerCase()) {
+                name = key;
+                break;
+            }
+        }
+        return name;
+    }
 }
-
-/**
- * Long format for `ms`.
- *
- * @param {Number} ms
- * @return {String}
- * @api private
- */
-
-function fmtLong(ms) {
-  var msAbs = Math.abs(ms);
-  if (msAbs >= d) {
-    return plural(ms, msAbs, d, 'day');
-  }
-  if (msAbs >= h) {
-    return plural(ms, msAbs, h, 'hour');
-  }
-  if (msAbs >= m) {
-    return plural(ms, msAbs, m, 'minute');
-  }
-  if (msAbs >= s) {
-    return plural(ms, msAbs, s, 'second');
-  }
-  return ms + ' ms';
+function caseInsenstiveURLSearchParams(Ctor) {
+    return class CaseInsenstiveURLSearchParams extends Ctor {
+        append(name, value) {
+            return super.append(this._normalizeKey(name), value);
+        }
+        delete(name) {
+            return super.delete(this._normalizeKey(name));
+        }
+        get(name) {
+            return super.get(this._normalizeKey(name));
+        }
+        getAll(name) {
+            return super.getAll(this._normalizeKey(name));
+        }
+        has(name) {
+            return super.has(this._normalizeKey(name));
+        }
+        set(name, value) {
+            return super.set(this._normalizeKey(name), value);
+        }
+        keys() {
+            return super.keys();
+        }
+        values() {
+            return super.values();
+        }
+        entries() {
+            return super.entries();
+        }
+        [Symbol.iterator]() {
+            return super[Symbol.iterator]();
+        }
+        _normalizeKey(name) {
+            return CaseInsensitiveMap.prototype._normalizeKey.call(this, name);
+        }
+    };
 }
-
-/**
- * Pluralization helper.
- */
-
-function plural(ms, msAbs, n, name) {
-  var isPlural = msAbs >= n * 1.5;
-  return Math.round(ms / n) + ' ' + name + (isPlural ? 's' : '');
+class URLWithoutHost extends whatwg_url_1.URL {
 }
+class MongoParseError extends Error {
+    get name() {
+        return 'MongoParseError';
+    }
+}
+class ConnectionString extends URLWithoutHost {
+    constructor(uri, options = {}) {
+        var _a;
+        const { looseValidation } = options;
+        if (!looseValidation && !connectionStringHasValidScheme(uri)) {
+            throw new MongoParseError('Invalid scheme, expected connection string to start with "mongodb://" or "mongodb+srv://"');
+        }
+        const match = uri.match(HOSTS_REGEX);
+        if (!match) {
+            throw new MongoParseError(`Invalid connection string "${uri}"`);
+        }
+        const { protocol, username, password, hosts, rest } = (_a = match.groups) !== null && _a !== void 0 ? _a : {};
+        if (!looseValidation) {
+            if (!protocol || !hosts) {
+                throw new MongoParseError(`Protocol and host list are required in "${uri}"`);
+            }
+            try {
+                decodeURIComponent(username !== null && username !== void 0 ? username : '');
+                decodeURIComponent(password !== null && password !== void 0 ? password : '');
+            }
+            catch (err) {
+                throw new MongoParseError(err.message);
+            }
+            const illegalCharacters = /[:/?#[\]@]/gi;
+            if (username === null || username === void 0 ? void 0 : username.match(illegalCharacters)) {
+                throw new MongoParseError(`Username contains unescaped characters ${username}`);
+            }
+            if (!username || !password) {
+                const uriWithoutProtocol = uri.replace(`${protocol}://`, '');
+                if (uriWithoutProtocol.startsWith('@') || uriWithoutProtocol.startsWith(':')) {
+                    throw new MongoParseError('URI contained empty userinfo section');
+                }
+            }
+            if (password === null || password === void 0 ? void 0 : password.match(illegalCharacters)) {
+                throw new MongoParseError('Password contains unescaped characters');
+            }
+        }
+        let authString = '';
+        if (typeof username === 'string')
+            authString += username;
+        if (typeof password === 'string')
+            authString += `:${password}`;
+        if (authString)
+            authString += '@';
+        try {
+            super(`${protocol.toLowerCase()}://${authString}${DUMMY_HOSTNAME}${rest}`);
+        }
+        catch (err) {
+            if (looseValidation) {
+                new ConnectionString(uri, {
+                    ...options,
+                    looseValidation: false
+                });
+            }
+            if (typeof err.message === 'string') {
+                err.message = err.message.replace(DUMMY_HOSTNAME, hosts);
+            }
+            throw err;
+        }
+        this._hosts = hosts.split(',');
+        if (!looseValidation) {
+            if (this.isSRV && this.hosts.length !== 1) {
+                throw new MongoParseError('mongodb+srv URI cannot have multiple service names');
+            }
+            if (this.isSRV && this.hosts.some(host => host.includes(':'))) {
+                throw new MongoParseError('mongodb+srv URI cannot have port number');
+            }
+        }
+        if (!this.pathname) {
+            this.pathname = '/';
+        }
+        Object.setPrototypeOf(this.searchParams, caseInsenstiveURLSearchParams(this.searchParams.constructor).prototype);
+    }
+    get host() { return DUMMY_HOSTNAME; }
+    set host(_ignored) { throw new Error('No single host for connection string'); }
+    get hostname() { return DUMMY_HOSTNAME; }
+    set hostname(_ignored) { throw new Error('No single host for connection string'); }
+    get port() { return ''; }
+    set port(_ignored) { throw new Error('No single host for connection string'); }
+    get href() { return this.toString(); }
+    set href(_ignored) { throw new Error('Cannot set href for connection strings'); }
+    get isSRV() {
+        return this.protocol.includes('srv');
+    }
+    get hosts() {
+        return this._hosts;
+    }
+    set hosts(list) {
+        this._hosts = list;
+    }
+    toString() {
+        return super.toString().replace(DUMMY_HOSTNAME, this.hosts.join(','));
+    }
+    clone() {
+        return new ConnectionString(this.toString(), {
+            looseValidation: true
+        });
+    }
+    redact(options) {
+        return (0, redact_1.redactValidConnectionString)(this, options);
+    }
+    typedSearchParams() {
+        const sametype = false && new (caseInsenstiveURLSearchParams(whatwg_url_1.URLSearchParams))();
+        return this.searchParams;
+    }
+    [Symbol.for('nodejs.util.inspect.custom')]() {
+        const { href, origin, protocol, username, password, hosts, pathname, search, searchParams, hash } = this;
+        return { href, origin, protocol, username, password, hosts, pathname, search, searchParams, hash };
+    }
+}
+exports.ConnectionString = ConnectionString;
+class CommaAndColonSeparatedRecord extends CaseInsensitiveMap {
+    constructor(from) {
+        super();
+        for (const entry of (from !== null && from !== void 0 ? from : '').split(',')) {
+            if (!entry)
+                continue;
+            const colonIndex = entry.indexOf(':');
+            if (colonIndex === -1) {
+                this.set(entry, '');
+            }
+            else {
+                this.set(entry.slice(0, colonIndex), entry.slice(colonIndex + 1));
+            }
+        }
+    }
+    toString() {
+        return [...this].map(entry => entry.join(':')).join(',');
+    }
+}
+exports.CommaAndColonSeparatedRecord = CommaAndColonSeparatedRecord;
+exports.default = ConnectionString;
+//# sourceMappingURL=index.js.map
