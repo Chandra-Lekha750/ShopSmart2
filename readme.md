@@ -1,66 +1,50 @@
-# supports-color [![Build Status](https://travis-ci.org/chalk/supports-color.svg?branch=master)](https://travis-ci.org/chalk/supports-color)
+# string-width
 
-> Detect whether a terminal supports color
+> Get the visual width of a string - the number of columns required to display it
+
+Some Unicode characters are [fullwidth](https://en.wikipedia.org/wiki/Halfwidth_and_fullwidth_forms) and use double the normal width. [ANSI escape codes](https://en.wikipedia.org/wiki/ANSI_escape_code) are stripped and doesn't affect the width.
+
+Useful to be able to measure the actual width of command-line output.
 
 
 ## Install
 
 ```
-$ npm install supports-color
+$ npm install string-width
 ```
 
 
 ## Usage
 
 ```js
-const supportsColor = require('supports-color');
+const stringWidth = require('string-width');
 
-if (supportsColor.stdout) {
-	console.log('Terminal stdout supports color');
-}
+stringWidth('a');
+//=> 1
 
-if (supportsColor.stdout.has256) {
-	console.log('Terminal stdout supports 256 colors');
-}
+stringWidth('古');
+//=> 2
 
-if (supportsColor.stderr.has16m) {
-	console.log('Terminal stderr supports 16 million colors (truecolor)');
-}
+stringWidth('\u001B[1m古\u001B[22m');
+//=> 2
 ```
-
-
-## API
-
-Returns an `Object` with a `stdout` and `stderr` property for testing either streams. Each property is an `Object`, or `false` if color is not supported.
-
-The `stdout`/`stderr` objects specifies a level of support for color through a `.level` property and a corresponding flag:
-
-- `.level = 1` and `.hasBasic = true`: Basic color support (16 colors)
-- `.level = 2` and `.has256 = true`: 256 color support
-- `.level = 3` and `.has16m = true`: Truecolor support (16 million colors)
-
-
-## Info
-
-It obeys the `--color` and `--no-color` CLI flags.
-
-Can be overridden by the user with the flags `--color` and `--no-color`. For situations where using `--color` is not possible, add the environment variable `FORCE_COLOR=1` to forcefully enable color or `FORCE_COLOR=0` to forcefully disable. The use of `FORCE_COLOR` overrides all other color support checks.
-
-Explicit 256/Truecolor mode can be enabled using the `--color=256` and `--color=16m` flags, respectively.
 
 
 ## Related
 
-- [supports-color-cli](https://github.com/chalk/supports-color-cli) - CLI for this module
-- [chalk](https://github.com/chalk/chalk) - Terminal string styling done right
+- [string-width-cli](https://github.com/sindresorhus/string-width-cli) - CLI for this module
+- [string-length](https://github.com/sindresorhus/string-length) - Get the real length of a string
+- [widest-line](https://github.com/sindresorhus/widest-line) - Get the visual width of the widest line in a string
 
 
-## Maintainers
+---
 
-- [Sindre Sorhus](https://github.com/sindresorhus)
-- [Josh Junon](https://github.com/qix-)
-
-
-## License
-
-MIT
+<div align="center">
+	<b>
+		<a href="https://tidelift.com/subscription/pkg/npm-string-width?utm_source=npm-string-width&utm_medium=referral&utm_campaign=readme">Get professional support for this package with a Tidelift subscription</a>
+	</b>
+	<br>
+	<sub>
+		Tidelift helps make open source sustainable for maintainers while giving companies<br>assurances about security, maintenance, and licensing for their dependencies.
+	</sub>
+</div>
